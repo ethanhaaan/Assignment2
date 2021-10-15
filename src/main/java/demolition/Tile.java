@@ -17,6 +17,12 @@ public abstract class Tile {
     public Tile(PImage sprite, TileType type, int x, int y) {
         this.sprite = sprite;
         this.type = type;
+        this.x = x;
+        this.y = y;
+    }
+
+    public void draw(PApplet app) {
+        app.image(sprite, x, y);
     }
 
     public int getX() {
@@ -24,6 +30,9 @@ public abstract class Tile {
     }
     public int getY() {
         return y;
+    }
+    public TileType getType() {
+        return type;
     }
 
 }

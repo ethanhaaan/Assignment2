@@ -1,0 +1,25 @@
+package demolition;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TileTest {
+
+    @Test
+    public void constructor() {
+        assertNotNull(new GoalTile(20, 40));
+    }
+
+    @Test
+    public void test1() {
+        Tile wall = new SolidWall(50, 10);
+        assertEquals(wall.getX(), 50);
+        assertEquals(wall.getY(), 10);
+    }
+    @Test
+    public void test2() {
+        Tile empty = new EmptyTile(10, 10);
+        assertEquals(empty.getType(), TileType.EMPTY);
+    }
+
+}
