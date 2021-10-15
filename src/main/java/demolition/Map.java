@@ -9,14 +9,12 @@ import java.io.FileNotFoundException;
 public class Map {
     
     private Tile[][] map;
-    private String path;
 
-    public Map(String path) {
+    public Map() {
         this.map = new Tile[13][15];
-        this.path = path;
     }
     
-    public void constructMap() {
+    public void constructMap(String path) {
         try {
             File lvl_file = new File(path);
             Scanner scanobj = new Scanner(lvl_file);
