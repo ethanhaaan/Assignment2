@@ -24,7 +24,6 @@ public abstract class GameObject {
         this.sprite_timer = 12;
         this.s_cycle_i = 0;
         this.s_dir_i = 2;
-        this.current_sprite = sprites[s_dir_i][s_cycle_i];
     }
 
     public abstract void tick();
@@ -32,13 +31,15 @@ public abstract class GameObject {
     public void sprite_cycle() {
         current_sprite = sprites[s_dir_i][s_cycle_i];
         if(sprite_timer == 1) {
-            if(s_cycle_i == 3)
+            if(s_cycle_i == 3) {
                 s_cycle_i = 0;
+            }
             else
                 s_cycle_i++;
+        sprite_timer = 12;
         }
         sprite_timer--;
-
+//CHECK THAT IT IS INDEED 12 CYCLES THAT IT REPEATS BY.
     }
 
     public void draw(PApplet app) {
