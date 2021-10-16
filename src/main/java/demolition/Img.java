@@ -6,7 +6,7 @@ import processing.data.JSONObject;
 import processing.data.JSONArray;
 import java.util.ArrayList;
 
-public class ImgLoad {
+public class Img {
 
     public static PImage[][] loadBombGuy(PApplet app) {
         PImage[][] img_array = new PImage[4][4];

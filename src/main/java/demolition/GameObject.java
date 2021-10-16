@@ -13,15 +13,31 @@ public abstract class GameObject {
     protected int y;
     protected PImage[][] sprites;
     protected PImage current_sprite;
+    protected int sprite_timer;
+    protected int s_dir_i;
+    protected int s_cycle_i;
 
     public GameObject(int x, int y, PImage[][] sprites) {
         this.x = x;
         this.y = y;
         this.sprites = sprites;
-        this.current_sprite = sprites[3][1];
+        this.sprite_timer = 12;
+        this.s_cycle_i = 0;
+        this.s_dir_i = 2;
+        this.current_sprite = sprites[s_dir_i][s_cycle_i];
     }
 
-    public void tick() {
+    public abstract void tick();
+
+    public void sprite_cycle() {
+        current_sprite = sprites[s_dir_i][s_cycle_i];
+        if(sprite_timer == 1) {
+            if(s_cycle_i == 3)
+                s_cycle_i = 0;
+            else
+                s_cycle_i++;
+        }
+        sprite_timer--;
 
     }
 
@@ -35,18 +51,18 @@ public abstract class GameObject {
     public int getY() {
         return y;
     }
-    public void moveLeft() {
-        x -= 32;
+
+    public void move(direction d) {
+        if(d == direction.LEFT)
+            x -= 32;
+        else if(d == direction.RIGHT)
+            x += 32;
+        else if(d == direction.UP) 
+            y -= 32;
+        else if(d == direction.DOWN)
+            y += 32;
     }
-    public void moveRight() {
-        x += 32;
-    }
-    public void moveUp() {
-        y -= 32;
-    }
-    public void moveDown() {
-        y += 32;
-    }
+
     public PImage[] getLeftSprites() {
         return sprites[0];
     }
@@ -79,7 +95,7 @@ public abstract class GameObject {
         }
         return g_objs;
     }
-    public static BombGuy load_player(String path) {
+    public static BombGuy load_player(String path, PImage[][] sprites) {
         try {
             File file = new File(path);
             Scanner scanobj = new Scanner(file);
@@ -87,7 +103,7 @@ public abstract class GameObject {
                 String line = scanobj.nextLine();
                 for(int j = 0; j < 15; j++) {
                     if("P".equals(String.valueOf(line.charAt(j))))
-                        return new BombGuy(32*j, 32*i+64);
+                        return new BombGuy(32*j, 32*i+64, sprites);
                 }
             }
             return null;
@@ -97,4 +113,8 @@ public abstract class GameObject {
             return null;
         }
     }
+}
+
+enum direction {
+	LEFT, RIGHT, UP, DOWN;
 }

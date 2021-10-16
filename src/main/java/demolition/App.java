@@ -25,7 +25,8 @@ public class App extends PApplet {
     private Map map;
     private BombGuy player;
     private int timer;
-    private int lives;
+    public int lives;
+    private boolean released;
 
     public App() {
         map = new Map();
@@ -46,11 +47,12 @@ public class App extends PApplet {
         GoalTile_s = this.loadImage("bin/main/goal/goal.png");
         
         //Loading bomb guy sprites
-        BombGuy_s = ImgLoad.loadBombGuy(this);
-        player = GameObject.load_player(path);
+        BombGuy_s = Img.loadBombGuy(this);
+        player = GameObject.load_player(path, BombGuy_s);
         
         //Loading configuration
         JSONObject config = loadJSONObject("config.json");
+        released = true;
         levels = config.getJSONArray("levels");
         lives = config.getInt("lives");
         map.constructMap(path);
@@ -58,10 +60,37 @@ public class App extends PApplet {
     }
 
     public void draw() {
+        player.tick();
         map.draw(this);
         player.draw(this);
         
     }
+
+    public void keyPressed() {
+        if(released) {
+            if(keyCode == 38) {
+                player.move(direction.UP);
+                System.out.println("registered UP");
+            }
+            else if(keyCode == 40) {
+                player.move(direction.DOWN);
+                System.out.println("registered DOWN");
+            }
+            else if(keyCode == 37) {
+                player.move(direction.LEFT);
+                System.out.println("registered LEFT");
+            }
+            else if(keyCode == 39) {
+                player.move(direction.RIGHT);
+                System.out.println("registered RIGHT");
+            }
+            released = false;
+        }
+    }
+
+	public void keyReleased() {
+		released = true;
+	} 
 
     public static void main(String[] args) {
         PApplet.main("demolition.App");

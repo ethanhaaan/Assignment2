@@ -8,13 +8,13 @@ import java.io.FileNotFoundException;
 
 public class BombGuy extends GameObject {
 
-    public BombGuy(int x, int y) {
-        super(x, y, App.BombGuy_s);
+    public BombGuy(int x, int y, PImage[][] sprites) {
+        super(x, y, sprites);
         
     }
 
     public void tick() {
-        
+        sprite_cycle();
     }
 
 }
