@@ -25,11 +25,14 @@ public class App extends PApplet {
     private Map map;
     private BombGuy player;
     private int timer;
-    public int lives;
+    private int lives;
+    private int level;
     private boolean released;
 
     public App() {
         map = new Map();
+        level = 0;
+        released = true;
     }
 
     public void settings() {
@@ -52,7 +55,6 @@ public class App extends PApplet {
         
         //Loading configuration
         JSONObject config = loadJSONObject("config.json");
-        released = true;
         levels = config.getJSONArray("levels");
         lives = config.getInt("lives");
         map.constructMap(path);
@@ -69,21 +71,25 @@ public class App extends PApplet {
     public void keyPressed() {
         if(released) {
             if(keyCode == 38) {
-                player.move(direction.UP);
+                player.move(Direction.UP, map);
                 System.out.println("registered UP");
             }
             else if(keyCode == 40) {
-                player.move(direction.DOWN);
+                player.move(Direction.DOWN, map);
                 System.out.println("registered DOWN");
             }
             else if(keyCode == 37) {
-                player.move(direction.LEFT);
+                player.move(Direction.LEFT, map);
                 System.out.println("registered LEFT");
             }
             else if(keyCode == 39) {
-                player.move(direction.RIGHT);
+                player.move(Direction.RIGHT, map);
                 System.out.println("registered RIGHT");
             }
+            if(player.checkWin(map)) {
+                //
+            }
+
             released = false;
         }
     }
@@ -94,6 +100,5 @@ public class App extends PApplet {
 
     public static void main(String[] args) {
         PApplet.main("demolition.App");
-
     }
 }

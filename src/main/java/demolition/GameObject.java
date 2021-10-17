@@ -11,70 +11,87 @@ import java.util.ArrayList;
 public abstract class GameObject {
     protected int x;
     protected int y;
+    protected int i_pos;
+    protected int j_pos;
     protected PImage[][] sprites;
     protected PImage current_sprite;
     protected int sprite_timer;
-    protected int s_dir_i;
-    protected int s_cycle_i;
+    protected int s_dir;
+    protected int s_cycle;
 
-    public GameObject(int x, int y, PImage[][] sprites) {
+    public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites) {
         this.x = x;
         this.y = y;
+        this.i_pos = i_pos;
+        this.j_pos = j_pos;
         this.sprites = sprites;
         this.sprite_timer = 12;
-        this.s_cycle_i = 0;
-        this.s_dir_i = 2;
+        this.s_cycle = 0;
+        this.s_dir = 3;
     }
 
     public abstract void tick();
 
     public void sprite_cycle() {
-        current_sprite = sprites[s_dir_i][s_cycle_i];
-        if(sprite_timer == 1) {
-            if(s_cycle_i == 3) {
-                s_cycle_i = 0;
+        current_sprite = sprites[s_dir][s_cycle];
+        if(sprite_timer < 0) {
+            if(s_cycle == 3) {
+                s_cycle = 0;
             }
             else
-                s_cycle_i++;
+                s_cycle++;
         sprite_timer = 12;
         }
-        sprite_timer--;
-//CHECK THAT IT IS INDEED 12 CYCLES THAT IT REPEATS BY.
+        else 
+            sprite_timer--;
     }
 
     public void draw(PApplet app) {
         app.image(current_sprite, x, y);
     }
 
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-
-    public void move(direction d) {
-        if(d == direction.LEFT)
+    public void move(Direction d, Map map) {
+        if(checkCollision(d, map))
+            return;
+        if(d == Direction.LEFT) {
             x -= 32;
-        else if(d == direction.RIGHT)
+            s_dir = 0; 
+            j_pos--;
+        }
+        else if(d == Direction.RIGHT) {
             x += 32;
-        else if(d == direction.UP) 
+            s_dir = 1;
+            j_pos++;
+        }
+        else if(d == Direction.UP) {
             y -= 32;
-        else if(d == direction.DOWN)
+            s_dir = 2;
+            i_pos--;
+        }
+        else if(d == Direction.DOWN) {
             y += 32;
+            s_dir = 3;
+            i_pos++;
+        }
     }
 
-    public PImage[] getLeftSprites() {
-        return sprites[0];
-    }
-    public PImage[] getRightSprites() {
-        return sprites[1];
-    }
-        public PImage[] getUpSprites() {
-        return sprites[2];
-    }
-    public PImage[] getDownSprites() {
-        return sprites[3];
+    public boolean checkCollision(Direction d, Map map) {
+        Tile[][] tiles = map.getMap();
+        TileType left_tile = tiles[i_pos][j_pos-1].getType();
+        TileType right_tile = tiles[i_pos][j_pos+1].getType();
+        TileType up_tile = tiles[i_pos-1][j_pos].getType();
+        TileType down_tile = tiles[i_pos+1][j_pos].getType();
+
+        if(d == Direction.LEFT && (left_tile == TileType.EMPTY || left_tile == TileType.GOAL))
+            return false; 
+        else if(d == Direction.RIGHT && (right_tile == TileType.EMPTY || right_tile == TileType.GOAL))
+            return false; 
+        else if(d == Direction.UP && (up_tile == TileType.EMPTY || up_tile == TileType.GOAL))
+            return false; 
+        else if(d == Direction.DOWN && (down_tile == TileType.EMPTY || down_tile == TileType.GOAL))
+            return false;
+        else
+            return true; 
     }
 
     public static List<GameObject> load_enemies(String path) {
@@ -104,7 +121,7 @@ public abstract class GameObject {
                 String line = scanobj.nextLine();
                 for(int j = 0; j < 15; j++) {
                     if("P".equals(String.valueOf(line.charAt(j))))
-                        return new BombGuy(32*j, 32*i+64, sprites);
+                        return new BombGuy(32*j, 32*i+64-16, i, j, sprites);
                 }
             }
             return null;
@@ -114,8 +131,21 @@ public abstract class GameObject {
             return null;
         }
     }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public int getI() {
+        return i_pos;
+    }
+    public int getJ() {
+        return j_pos;
+    }
 }
 
-enum direction {
+enum Direction {
 	LEFT, RIGHT, UP, DOWN;
 }

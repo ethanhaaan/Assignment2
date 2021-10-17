@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.GameObjectTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-10-16T14:11:00" hostname="kali" time="0.003">
+<testsuite name="demolition.GameObjectTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-10-17T02:46:21" hostname="kali" time="0.009">
   <properties/>
-  <testcase name="NullCheck()" classname="demolition.GameObjectTest" time="0.002"/>
+  <testcase name="checkMovement1()" classname="demolition.GameObjectTest" time="0.002"/>
+  <testcase name="NullCheck()" classname="demolition.GameObjectTest" time="0.003"/>
   <testcase name="NullCheck2()" classname="demolition.GameObjectTest" time="0.0"/>
+  <testcase name="correct_IandJ_pos_check()" classname="demolition.GameObjectTest" time="0.0"/>
   <testcase name="tickTest1()" classname="demolition.GameObjectTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
