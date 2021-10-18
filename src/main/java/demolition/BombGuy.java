@@ -8,15 +8,24 @@ import java.io.FileNotFoundException;
 
 public class BombGuy extends GameObject {
 
-    public BombGuy(int x, int y, int i_pos, int j_pos, PImage[][] sprites) {
-        super(x, y, i_pos, j_pos, sprites);
+    private int lives;
+
+    public BombGuy(int x, int y, int i_pos, int j_pos, PImage[][] sprites, int lives, Map map) {
+        super(x, y, i_pos, j_pos, sprites, map);
+        this.lives = lives;
+        this.s_cycle = 0;
+        this.s_dir = 3;
     }
 
     public void tick() {
         sprite_cycle();
     }
 
-    public boolean checkWin(Map map) {
+    public void collisionCondition(Direction d, Map map) {
+        return;
+    }
+
+    public boolean checkWin() {
         Tile[][] tiles = map.getMap();
         if(tiles[i_pos][j_pos].getType() == TileType.GOAL)
             return true;

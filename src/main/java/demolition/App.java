@@ -5,6 +5,7 @@ import processing.core.PImage;
 import processing.data.JSONObject;
 import processing.data.JSONArray;
 import java.util.ArrayList;
+import java.util.List;
 
 public class App extends PApplet {
 
@@ -17,6 +18,8 @@ public class App extends PApplet {
     public static PImage EmptyTile_s;
     public static PImage GoalTile_s;
     public static PImage[][] BombGuy_s;
+    public static PImage[][] Red_s;
+    public static PImage[][] Yellow_s;
 
     public static String path = "level1.txt";
     public static int[] start_pos;
@@ -24,6 +27,7 @@ public class App extends PApplet {
 
     private Map map;
     private BombGuy player;
+    private List<Enemy> enemies;
     private int timer;
     private int lives;
     private int level;
@@ -49,44 +53,55 @@ public class App extends PApplet {
         EmptyTile_s = this.loadImage("bin/main/empty/empty.png");
         GoalTile_s = this.loadImage("bin/main/goal/goal.png");
         
-        //Loading bomb guy sprites
-        BombGuy_s = Img.loadBombGuy(this);
-        player = GameObject.load_player(path, BombGuy_s);
-        
         //Loading configuration
         JSONObject config = loadJSONObject("config.json");
         levels = config.getJSONArray("levels");
         lives = config.getInt("lives");
         map.constructMap(path);
+        
+        //Loading bomb guy sprites
+        BombGuy_s = Img.loadBombGuy(this);
+        player = GameObject.load_player(path, BombGuy_s, lives, map);
 
+        //Loading enemies
+        Red_s = Img.loadRed(this);
+        Yellow_s = Img.loadYellow(this);
+        enemies = GameObject.load_enemies(path, Red_s, Yellow_s, map);
+        
     }
 
     public void draw() {
         player.tick();
+        for(Enemy e : enemies) {
+            e.tick();
+        }
         map.draw(this);
         player.draw(this);
+        for(Enemy e : enemies) {
+            e.draw(this);
+        }
         
     }
 
     public void keyPressed() {
         if(released) {
             if(keyCode == 38) {
-                player.move(Direction.UP, map);
+                player.move(Direction.UP);
                 System.out.println("registered UP");
             }
             else if(keyCode == 40) {
-                player.move(Direction.DOWN, map);
+                player.move(Direction.DOWN);
                 System.out.println("registered DOWN");
             }
             else if(keyCode == 37) {
-                player.move(Direction.LEFT, map);
+                player.move(Direction.LEFT);
                 System.out.println("registered LEFT");
             }
             else if(keyCode == 39) {
-                player.move(Direction.RIGHT, map);
+                player.move(Direction.RIGHT);
                 System.out.println("registered RIGHT");
             }
-            if(player.checkWin(map)) {
+            if(player.checkWin()) {
                 //
             }
 

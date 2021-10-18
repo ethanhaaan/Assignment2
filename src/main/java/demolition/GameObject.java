@@ -18,19 +18,20 @@ public abstract class GameObject {
     protected int sprite_timer;
     protected int s_dir;
     protected int s_cycle;
+    protected Map map;
 
-    public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites) {
+    public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {
         this.x = x;
         this.y = y;
         this.i_pos = i_pos;
         this.j_pos = j_pos;
         this.sprites = sprites;
         this.sprite_timer = 12;
-        this.s_cycle = 0;
-        this.s_dir = 3;
+        this.map = map;
     }
 
     public abstract void tick();
+    public abstract void collisionCondition(Direction d, Map map);
 
     public void sprite_cycle() {
         current_sprite = sprites[s_dir][s_cycle];
@@ -50,9 +51,11 @@ public abstract class GameObject {
         app.image(current_sprite, x, y);
     }
 
-    public void move(Direction d, Map map) {
-        if(checkCollision(d, map))
+    public void move(Direction d) {
+        if(checkCollision(d, map)) {
+            collisionCondition(d, map);
             return;
+        }
         if(d == Direction.LEFT) {
             x -= 32;
             s_dir = 0; 
@@ -90,30 +93,32 @@ public abstract class GameObject {
             return false; 
         else if(d == Direction.DOWN && (down_tile == TileType.EMPTY || down_tile == TileType.GOAL))
             return false;
-        else
+        else 
             return true; 
     }
 
-    public static List<GameObject> load_enemies(String path) {
-        List<GameObject> g_objs = new ArrayList<GameObject>();
+    public static List<Enemy> load_enemies(String path, PImage[][] Red_s, PImage[][] Yellow_s, Map map) {
+        List<Enemy> enemies = new ArrayList<Enemy>();
         try {
             File file = new File(path);
             Scanner scanobj = new Scanner(file);
             for(int i = 0; i < 13; i++) {
                 String line = scanobj.nextLine();
                 for(int j = 0; j < 15; j++) {
-                    if("Y".equals(String.valueOf(line.charAt(j))))
-                        System.out.println("Do nothing");
+                    if("R".equals(String.valueOf(line.charAt(j))))
+                        enemies.add(new Red(32*j, 32*i+64-16, i, j, Red_s, map));
+                    else if("Y".equals(String.valueOf(line.charAt(j))))
+                        enemies.add(new Yellow(32*j, 32*i+64-16, i, j, Yellow_s, map));
                 }
             }
-            return g_objs;
+            return enemies;
         }
         catch(FileNotFoundException e) {
-
+            System.out.println("not working");
         }
-        return g_objs;
+        return enemies;
     }
-    public static BombGuy load_player(String path, PImage[][] sprites) {
+    public static BombGuy load_player(String path, PImage[][] sprites, int lives, Map map) {
         try {
             File file = new File(path);
             Scanner scanobj = new Scanner(file);
@@ -121,7 +126,7 @@ public abstract class GameObject {
                 String line = scanobj.nextLine();
                 for(int j = 0; j < 15; j++) {
                     if("P".equals(String.valueOf(line.charAt(j))))
-                        return new BombGuy(32*j, 32*i+64-16, i, j, sprites);
+                        return new BombGuy(32*j, 32*i+64-16, i, j, sprites, lives, map);
                 }
             }
             return null;
@@ -148,4 +153,7 @@ public abstract class GameObject {
 
 enum Direction {
 	LEFT, RIGHT, UP, DOWN;
+    public static Direction getRandomDirection() {
+        return values()[(int)(Math.random()*4)];
+    }
 }
