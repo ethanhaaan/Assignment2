@@ -29,7 +29,6 @@ public abstract class GameObject {
         this.sprite_timer = 12;
         this.map = map;
     }
-
     public abstract void tick();
     public abstract void collisionCondition(Direction d, Map map);
 
@@ -95,46 +94,6 @@ public abstract class GameObject {
             return false;
         else 
             return true; 
-    }
-
-    public static List<Enemy> load_enemies(String path, PImage[][] Red_s, PImage[][] Yellow_s, Map map) {
-        List<Enemy> enemies = new ArrayList<Enemy>();
-        try {
-            File file = new File(path);
-            Scanner scanobj = new Scanner(file);
-            for(int i = 0; i < 13; i++) {
-                String line = scanobj.nextLine();
-                for(int j = 0; j < 15; j++) {
-                    if("R".equals(String.valueOf(line.charAt(j))))
-                        enemies.add(new Red(32*j, 32*i+64-16, i, j, Red_s, map));
-                    else if("Y".equals(String.valueOf(line.charAt(j))))
-                        enemies.add(new Yellow(32*j, 32*i+64-16, i, j, Yellow_s, map));
-                }
-            }
-            return enemies;
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("not working");
-        }
-        return enemies;
-    }
-    public static BombGuy load_player(String path, PImage[][] sprites, int lives, Map map) {
-        try {
-            File file = new File(path);
-            Scanner scanobj = new Scanner(file);
-            for(int i = 0; i < 13; i++) {
-                String line = scanobj.nextLine();
-                for(int j = 0; j < 15; j++) {
-                    if("P".equals(String.valueOf(line.charAt(j))))
-                        return new BombGuy(32*j, 32*i+64-16, i, j, sprites, lives, map);
-                }
-            }
-            return null;
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("nothing");
-            return null;
-        }
     }
 
     public int getX() {

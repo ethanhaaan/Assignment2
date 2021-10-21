@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.MapTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-10-18T01:48:29" hostname="kali" time="0.046">
+<testsuite name="demolition.MapTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-10-18T02:13:29" hostname="kali" time="0.047">
   <properties/>
   <testcase name="constructMap1()" classname="demolition.MapTest" time="0.044"/>
   <testcase name="mapNullTest()" classname="demolition.MapTest" time="0.002"/>

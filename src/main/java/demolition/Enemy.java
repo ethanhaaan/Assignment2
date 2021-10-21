@@ -12,7 +12,6 @@ public abstract class Enemy extends GameObject {
         super(x, y, i_pos, j_pos, sprites, map);
         timer = 60;
         setOrientation();
-
     }
 
     private void setOrientation() {

@@ -74,4 +74,11 @@ public class Img {
         return img_array;
     }
 
+    public static PImage[] loadUI(PApplet app) {
+        PImage[] UI = new PImage[2];
+        UI[0] = app.loadImage("bin/main/icons/player.png");
+        UI[1] = app.loadImage("bin/main/icons/clock.png");
+        return UI;
+    }
+
 }

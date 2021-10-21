@@ -9,5 +9,5 @@ WB   B   B    W
 WBW W W WBW W W
 W    YBB   B BW
 W WBW W W W W W
-W            GW
+W        B   GW
 WWWWWWWWWWWWWWW

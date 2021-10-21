@@ -2,6 +2,8 @@ package demolition;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,9 +11,12 @@ import java.io.FileNotFoundException;
 public class Map {
     
     private Tile[][] map;
+    private List<Enemy> enemies;
+    private BombGuy player;
 
     public Map() {
         this.map = new Tile[13][15];
+        this.enemies = new ArrayList<Enemy>();
     }
     
     public void constructMap(String path) {
@@ -35,6 +40,47 @@ public class Map {
         catch(FileNotFoundException e) {
             System.out.println("Failed");
         }
+    }
+
+    public void loadObjects(String path, int lives, PImage[][] sprites, PImage[][] Red_s, PImage[][] Yellow_s) {
+        try {
+            File file = new File(path);
+            Scanner scanobj = new Scanner(file);
+            for(int i = 0; i < 13; i++) {
+                String line = scanobj.nextLine();
+                for(int j = 0; j < 15; j++) {
+                    if("P".equals(String.valueOf(line.charAt(j))))
+                        player = new BombGuy(32*j, 32*i+64-16, i, j, sprites, lives, this);
+                    else if("R".equals(String.valueOf(line.charAt(j))))
+                        enemies.add(new Red(32*j, 32*i+64-16, i, j, Red_s, this));
+                    else if("Y".equals(String.valueOf(line.charAt(j))))
+                        enemies.add(new Yellow(32*j, 32*i+64-16, i, j, Yellow_s, this));
+                }
+            }
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("not working");
+        }
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public BombGuy getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(BombGuy player) {
+        this.player = player;
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void nextLevel() {
+        
     }
 
     public void draw(PApplet app) {
