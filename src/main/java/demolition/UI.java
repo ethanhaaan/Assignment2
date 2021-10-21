@@ -28,4 +28,20 @@ public class UI {
         app.text(lives, 168, 45);
         timer = 60;
     }
+
+    public void drawWin(PApplet app) {
+        app.fill(239, 129, 0);
+        app.stroke(239, 129, 0);
+        app.rect(-1, -1, 482, 482);
+        app.fill(0, 0, 0);
+        app.text("YOU WIN", 168, 218);
+    }
+
+    public void drawLose(PApplet app) {
+        app.fill(239, 129, 0);
+        app.stroke(239, 129, 0);
+        app.rect(-1, -1, 482, 482);
+        app.fill(0, 0, 0);
+        app.text("GAME OVER", 168, 218);
+    }
 }

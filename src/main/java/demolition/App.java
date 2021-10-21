@@ -34,16 +34,17 @@ public class App extends PApplet {
     private int lives;
     private int level;
     private boolean released;
+    private boolean win;
 
     public App() {
         map = new Map();
         level = 0;
         released = true;
+        win = false;
     }
 
     public void settings() {
-        size(WIDTH, HEIGHT);
-        
+        size(WIDTH, HEIGHT); 
     }
 
     public void setup() {
@@ -79,6 +80,10 @@ public class App extends PApplet {
     }
 
     public void draw() {
+        if(win) {
+            ui.drawWin(this);
+            return;
+        }
         map.getPlayer().tick();
         for(Enemy e : map.getEnemies()) {
             e.tick();
@@ -87,6 +92,10 @@ public class App extends PApplet {
         map.getPlayer().draw(this);
         for(Enemy e : map.getEnemies()) {
             e.draw(this);
+        }
+        if(map.getPlayer().getLives() == 0) {
+            ui.drawLose(this);
+            return;
         }
         ui.draw(this, map.getPlayer().getLives());
     }
@@ -110,14 +119,16 @@ public class App extends PApplet {
                 System.out.println("registered RIGHT");
             }
             if(map.getPlayer().checkWin()) {
+                if(level == levels.size()-1) {
+                    win = true;
+                    return;
+                }
                 lives = map.getPlayer().getLives();
                 path = levels.getJSONObject(++level).getString("path");
                 map = new Map();
-                
                 map.constructMap(path);
                 map.loadObjects(path, lives, BombGuy_s, Red_s, Yellow_s);
             }
-
             released = false;
         }
     }

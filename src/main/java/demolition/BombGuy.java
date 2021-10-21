@@ -44,10 +44,6 @@ public class BombGuy extends GameObject {
             if(i_pos == e.getI() && j_pos == e.getJ() && rspwn_immunity == 0) {
                 lives--;
                 rspwn_immunity = 60;
-                if(lives == 0) {
-                    System.out.println("dead");
-                }
-                return;
             }
         }
     }
