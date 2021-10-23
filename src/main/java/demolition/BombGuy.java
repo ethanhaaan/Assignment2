@@ -23,6 +23,8 @@ public class BombGuy extends GameObject {
     public void tick() {
         sprite_cycle();
         checkKill();
+        if(rspwn_immunity != 0)
+            rspwn_immunity--;
     }
 
     public void collisionCondition(Direction d, Map map) {
@@ -36,16 +38,19 @@ public class BombGuy extends GameObject {
         return false;
     }
     public void checkKill() {
-        if(rspwn_immunity != 0) {
-            rspwn_immunity--;
-            return;
-        }
         for(Enemy e : map.getEnemies()) {
             if(i_pos == e.getI() && j_pos == e.getJ() && rspwn_immunity == 0) {
-                lives--;
-                rspwn_immunity = 60;
+                kill();
             }
         }
+    }
+
+    public void kill() {
+        if(rspwn_immunity != 0) {
+            return;
+        }
+        lives--;
+        rspwn_immunity = 60;
     }
     public int getLives() {
         return lives;

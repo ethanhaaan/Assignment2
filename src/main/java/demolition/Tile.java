@@ -39,24 +39,24 @@ public abstract class Tile {
 
 class SolidWall extends Tile {
     public SolidWall(int x, int y) {
-        super(App.SolidWall_s, TileType.SOLID, x, y);
+        super(App.Wall_s[0], TileType.SOLID, x, y);
     }
 }
 
 class BrokenWall extends Tile {
     public BrokenWall(int x, int y) {
-        super(App.BrokenWall_s, TileType.BROKEN, x, y);
+        super(App.Wall_s[1], TileType.BROKEN, x, y);
     }
 }
 
 class EmptyTile extends Tile {
     public EmptyTile(int x, int y) {
-        super(App.EmptyTile_s, TileType.EMPTY, x, y);
+        super(App.Wall_s[2], TileType.EMPTY, x, y);
     }
 }
 
 class GoalTile extends Tile {
     public GoalTile(int x, int y) {
-        super(App.GoalTile_s, TileType.GOAL, x, y);
+        super(App.Wall_s[3], TileType.GOAL, x, y);
     }
 }

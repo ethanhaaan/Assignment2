@@ -8,6 +8,39 @@ import java.util.ArrayList;
 
 public class Img {
 
+    public static PImage[] loadWall(PApplet app) {
+        PImage[] img_array = new PImage[4];
+        img_array[0] = app.loadImage("bin/main/wall/solid.png");
+        img_array[1] = app.loadImage("bin/main/broken/broken.png");
+        img_array[2] = app.loadImage("bin/main/empty/empty.png");
+        img_array[3] = app.loadImage("bin/main/goal/goal.png");
+        return img_array;
+    }
+
+    public static PImage[][] loadBomb(PApplet app) {
+        PImage[][] img_array = new PImage[2][];
+        PImage[] bombs = new PImage[9];
+        PImage[] explosion = new PImage[7];
+        bombs[0] = app.loadImage("bin/main/bomb/bomb1.png");
+        bombs[1] = app.loadImage("bin/main/bomb/bomb2.png");
+        bombs[2] = app.loadImage("bin/main/bomb/bomb3.png");
+        bombs[3] = app.loadImage("bin/main/bomb/bomb4.png");
+        bombs[4] = app.loadImage("bin/main/bomb/bomb5.png");
+        bombs[5] = app.loadImage("bin/main/bomb/bomb6.png");
+        bombs[6] = app.loadImage("bin/main/bomb/bomb7.png");
+        bombs[7] = app.loadImage("bin/main/bomb/bomb8.png");
+        explosion[0] = app.loadImage("bin/main/explosion/centre.png");
+        explosion[1] = app.loadImage("bin/main/explosion/horizontal.png");
+        explosion[2] = app.loadImage("bin/main/explosion/vertical.png");
+        explosion[3] = app.loadImage("bin/main/explosion/end_left.png");
+        explosion[4] = app.loadImage("bin/main/explosion/end_right.png");
+        explosion[5] = app.loadImage("bin/main/explosion/end_top.png");
+        explosion[6] = app.loadImage("bin/main/explosion/end_bottom.png");
+        img_array[0] = bombs;
+        img_array[1] = explosion;
+        return img_array;
+    }
+
     public static PImage[][] loadBombGuy(PApplet app) {
         PImage[][] img_array = new PImage[4][4];
         img_array[0][0] = app.loadImage("bin/main/player/player_left1.png");

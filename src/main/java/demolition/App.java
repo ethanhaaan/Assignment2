@@ -14,11 +14,9 @@ public class App extends PApplet {
     public static final int HEIGHT = 480;
     public static final int FPS = 60;
 
-    public static PImage SolidWall_s;
-    public static PImage BrokenWall_s;
-    public static PImage EmptyTile_s;
-    public static PImage GoalTile_s;
+    public static PImage[] Wall_s;
     public static PImage[] UI_s;
+    public static PImage[][] Bomb_s;
     public static PImage[][] BombGuy_s;
     public static PImage[][] Red_s;
     public static PImage[][] Yellow_s;
@@ -54,27 +52,20 @@ public class App extends PApplet {
         font = createFont("bin/main/PressStart2P-Regular.ttf", 20);
         textFont(font);
 
-        //Loading wall sprites
-        SolidWall_s = this.loadImage("bin/main/wall/solid.png");
-        BrokenWall_s = this.loadImage("bin/main/broken/broken.png");
-        EmptyTile_s = this.loadImage("bin/main/empty/empty.png");
-        GoalTile_s = this.loadImage("bin/main/goal/goal.png");
+        //Loading sprites
+        Wall_s = Img.loadWall(this);
+        Red_s = Img.loadRed(this);
+        Yellow_s = Img.loadYellow(this);
+        BombGuy_s = Img.loadBombGuy(this);
+        Bomb_s = Img.loadBomb(this);
+        UI_s = Img.loadUI(this);
 
         //Loading configuration
         JSONObject config = loadJSONObject("config.json");
         levels = config.getJSONArray("levels");
         lives = config.getInt("lives");
         map.constructMap(path);
-
-        //Loading character sprites
-        Red_s = Img.loadRed(this);
-        Yellow_s = Img.loadYellow(this);
-        BombGuy_s = Img.loadBombGuy(this);
-
         map.loadObjects(path, lives, BombGuy_s, Red_s, Yellow_s);
-
-        //UI
-        UI_s = Img.loadUI(this);
         ui = new UI(UI_s);
         
     }
@@ -85,15 +76,17 @@ public class App extends PApplet {
             return;
         }
         map.getPlayer().tick();
-        for(Enemy e : map.getEnemies()) {
+        for(Enemy e : map.getEnemies())
             e.tick();
-        }
+        for(Bomb b : map.getBombs()) 
+            b.tick();
         map.draw(this);
         map.getPlayer().draw(this);
-        for(Enemy e : map.getEnemies()) {
+        for(Enemy e : map.getEnemies())
             e.draw(this);
-        }
-        if(map.getPlayer().getLives() == 0) {
+        for(Bomb b : map.getBombs())
+            b.draw(this);
+        if(map.getPlayer().getLives() <= 0) {
             ui.drawLose(this);
             return;
         }
@@ -117,6 +110,10 @@ public class App extends PApplet {
             else if(keyCode == 39) {
                 map.getPlayer().move(Direction.RIGHT);
                 System.out.println("registered RIGHT");
+            }
+            else if(keyCode == 32) {
+                BombGuy b = map.getPlayer();
+                map.getBombs().add(new Bomb(b.getX(), b.getY()+16,b.getI(), b.getJ(), Bomb_s, map));
             }
             if(map.getPlayer().checkWin()) {
                 if(level == levels.size()-1) {

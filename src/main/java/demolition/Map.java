@@ -12,11 +12,13 @@ public class Map {
     
     private Tile[][] map;
     private List<Enemy> enemies;
+    private List<Bomb> bombs;
     private BombGuy player;
 
     public Map() {
         this.map = new Tile[13][15];
         this.enemies = new ArrayList<Enemy>();
+        this.bombs = new ArrayList<Bomb>();
     }
     
     public void constructMap(String path) {
@@ -71,16 +73,8 @@ public class Map {
         return player;
     }
 
-    public void setPlayer(BombGuy player) {
-        this.player = player;
-    }
-
-    public void setEnemies(List<Enemy> enemies) {
-        this.enemies = enemies;
-    }
-
-    public void nextLevel() {
-        
+    public List<Bomb> getBombs() {
+        return bombs;
     }
 
     public void draw(PApplet app) {

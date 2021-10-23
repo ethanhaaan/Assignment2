@@ -8,28 +8,25 @@ import processing.core.PApplet;
 public class GameObjectTest{
 
     @Test
-    public void NullCheck() {
-
-        BombGuy test_player = new BombGuy(60, 10, 1, 1, null, 3, null);
-        assertNotNull(test_player);
-    }
-
-    @Test
-    public void NullCheck2() {
-        BombGuy test_player = GameObject.load_player("level1.txt", null, 3, null);
-        assertNotNull(test_player);
+    public void NullCheck1() {
+        Map map = new Map();
+        map.constructMap("level1.txt");
+        map.loadObjects("level1.txt", 3, null, null, null);
+        assertNotNull(map.getPlayer());
     }
 
     @Test
     public void tickTest1() {
         //PImage[][] sprites = Img.loadBombGuy();
-        BombGuy test_player = GameObject.load_player("level1.txt", null, 3 , null);
+        //BombGuy test_player = GameObject.load_player("level1.txt", null, 3 , null);
 
     }
 
     @Test
     public void correct_IandJ_pos_check() {
-        BombGuy test_player = GameObject.load_player("level1.txt", null, 3, null);
+        Map map = new Map();
+        map.constructMap("level1.txt");
+        map.loadObjects("level1.txt", 3, null, null, null);
         assertEquals(test_player.getI(), 1);
         assertEquals(test_player.getJ(), 1);
     }
@@ -38,7 +35,7 @@ public class GameObjectTest{
     public void checkMovement1() {
         Map map = new Map();
         map.constructMap("level1.txt");
-        BombGuy test_player = GameObject.load_player("level1.txt", null, 3, map);
+        map.loadObjects("level1.txt", 3, null, null, null);
         test_player.move(Direction.RIGHT);
         test_player.move(Direction.RIGHT);
         test_player.move(Direction.RIGHT);
