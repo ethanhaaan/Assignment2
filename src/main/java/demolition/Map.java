@@ -14,14 +14,62 @@ public class Map {
     private List<Enemy> enemies;
     private List<Bomb> bombs;
     private BombGuy player;
+    private int timer;
+    private int fps_timer;
 
     public Map() {
         this.map = new Tile[13][15];
         this.enemies = new ArrayList<Enemy>();
         this.bombs = new ArrayList<Bomb>();
+        this.fps_timer = 60;
     }
-    
-    public void constructMap(String path) {
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public BombGuy getPlayer() {
+        return player;
+    }
+
+    public List<Bomb> getBombs() {
+        return bombs;
+    }
+    public void addBomb(Bomb bomb) {
+        //check if bomb exists in position
+        boolean existing_bomb = false;
+        //INCOMPLETE
+        bombs.add(bomb);
+    }
+
+    public void tick() {
+        if(fps_timer == 0) {
+            timer--;
+            fps_timer = 60;
+        }
+        else {
+            fps_timer--;
+        }
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public void draw(PApplet app) {
+        for(Tile[] i : map) {
+            for(Tile j : i) {
+                j.draw(app);
+            }
+        }
+    }
+
+    public Tile[][] getMap() {
+        return map;
+    }    
+
+    public void constructMap(String path, int time) {
+        this.timer = time;
         try {
             File lvl_file = new File(path);
             Scanner scanobj = new Scanner(lvl_file);
@@ -64,29 +112,4 @@ public class Map {
             System.out.println("not working");
         }
     }
-
-    public List<Enemy> getEnemies() {
-        return enemies;
-    }
-
-    public BombGuy getPlayer() {
-        return player;
-    }
-
-    public List<Bomb> getBombs() {
-        return bombs;
-    }
-
-    public void draw(PApplet app) {
-        for(Tile[] i : map) {
-            for(Tile j : i) {
-                j.draw(app);
-            }
-        }
-    }
-
-    public Tile[][] getMap() {
-        return map;
-    }
-
 }

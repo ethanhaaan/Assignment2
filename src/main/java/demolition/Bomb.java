@@ -19,8 +19,8 @@ public class Bomb {
     private int sprite_timer;
     private int s_i;
     private int s_cycle;
+    private boolean exploding;
     private boolean exploded;
-    private boolean finished;
     private Map map;
     private List<Explosion> explosion;
 
@@ -30,8 +30,8 @@ public class Bomb {
         this.i_pos = i_pos;
         this.j_pos = j_pos;
         this.sprites = sprites;
+        this.exploding = false;
         this.exploded = false;
-        this.finished = false;
         this.s_cycle = 0;
         this.s_i = 0;
         this.sprite_timer = 15;
@@ -42,13 +42,12 @@ public class Bomb {
     }
 
     public void tick() {
-        if(countdown_timer == 0) {
+        if(!exploding && countdown_timer == 0) {
             explode();
-            countdown_timer--;
         }
-        else if(exploded) {
+        else if(exploding) {
             if(explosion_timer == 0) {
-                finished = true;
+                exploded = true;
                 return;
             }
             explosion_timer--; 
@@ -61,13 +60,16 @@ public class Bomb {
     }
 
     public void draw(PApplet app) {
-        if(finished) {
+        //Explosion finished
+        if(exploded) {
             return;
         }
-        else if(!exploded) {
+        //Explosion not started
+        else if(!exploding) {
             app.image(current_sprite, x, y);
         }
-        else if(exploded) {
+        //In process of exploding
+        else if(exploding) {
             for(Explosion e : explosion) {
                 app.image(e.getSprite(), e.getX(), e.getY());
             }
@@ -76,7 +78,7 @@ public class Bomb {
     }
 
     public void sprite_cycle() {
-        if(exploded)
+        if(exploding)
             return;
         current_sprite = sprites[s_i][s_cycle];
         if(sprite_timer == 0) {
@@ -87,56 +89,110 @@ public class Bomb {
     }
 
     public void explode() {
-        exploded = true;
+        exploding = true;
         explosion.add(new Explosion(x, y, i_pos, j_pos, sprites[1][0]));
         //checkLeft
         for(int i = 1; i < 3; i++) {
-            TileType temp_tiletype = map.getMap()[i_pos][j_pos-i].getType();
-            if(j_pos > 0 && j_pos < 14 && (i == 2 || (temp_tiletype != TileType.EMPTY && temp_tiletype != TileType.GOAL))) {
-                map.getMap()[i_pos][j_pos-i] = new EmptyTile(x-32*i, y);
-                explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][3]));
+            TileType adj_tiletype = map.getMap()[i_pos][j_pos-i].getType();
+
+            if(adj_tiletype == TileType.SOLID) {
                 break;
             }
-            else {
-                explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][1]));
+
+            else if(adj_tiletype == TileType.BROKEN) {
+                map.getMap()[i_pos][j_pos-i] = new EmptyTile(x-32*i, y);
+                explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][3]));
+                break;     
+            }
+
+            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {
+                TileType last_tiletype = map.getMap()[i_pos][j_pos-2].getType();
+                if((last_tiletype == TileType.SOLID && i == 1) || i == 2) {
+                    explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][3]));
+                    break;     
+                }
+                else {
+                    explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][1]));
+                }
             }
         }
         //checkRight
         for(int i = 1; i < 3; i++) {
-            TileType temp_tiletype = map.getMap()[i_pos][j_pos+i].getType();
-            if(j_pos > 0 && j_pos < 14 && (i == 2 || (temp_tiletype != TileType.EMPTY && temp_tiletype != TileType.GOAL))) {
-                map.getMap()[i_pos][j_pos+i] = new EmptyTile(x+32*i, y);
-                explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][4]));
+            TileType adj_tiletype = map.getMap()[i_pos][j_pos+i].getType();
+
+            if(adj_tiletype == TileType.SOLID) {
                 break;
             }
-            else {
-                explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][1]));
+
+            else if(adj_tiletype == TileType.BROKEN) {
+                map.getMap()[i_pos][j_pos+i] = new EmptyTile(x+32*i, y);
+                explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][4]));
+                break;     
+            }
+
+            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {
+                TileType last_tiletype = map.getMap()[i_pos][j_pos+2].getType();
+                if((last_tiletype == TileType.SOLID && i == 1) || i == 2) {
+                    explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][4]));
+                    break;     
+                }
+                else {
+                    explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][1]));
+                }
             }
         }
         //checkUp
         for(int i = 1; i < 3; i++) {
-            TileType temp_tiletype = map.getMap()[i_pos-i][j_pos].getType();
-            if(j_pos > 0 && j_pos < 14 && (i == 2 || (temp_tiletype != TileType.EMPTY && temp_tiletype != TileType.GOAL))) {
+            TileType adj_tiletype = map.getMap()[i_pos-1][j_pos].getType();
+
+            if(adj_tiletype == TileType.SOLID) {
+                break;
+            }
+
+            else if(adj_tiletype == TileType.BROKEN) {
                 map.getMap()[i_pos-i][j_pos] = new EmptyTile(x, y-32*i);
                 explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][5]));
-                break;
+                break;     
             }
-            else {
-                explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][2]));
+
+            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {
+                TileType last_tiletype = map.getMap()[i_pos-2][j_pos].getType();
+                if((last_tiletype == TileType.SOLID && i == 1) || i == 2) {
+                    explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][5]));
+                    break;     
+                }
+                else {
+                    explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][2]));
+                }
             }
         }
-        //checkBottom
+
+        //checkDown
         for(int i = 1; i < 3; i++) {
-            TileType temp_tiletype = map.getMap()[i_pos+i][j_pos].getType();
-            if(j_pos > 0 && j_pos < 14 && (i == 2 || (temp_tiletype != TileType.EMPTY && temp_tiletype != TileType.GOAL))) {
+            TileType adj_tiletype = map.getMap()[i_pos+1][j_pos].getType();
+
+            if(adj_tiletype == TileType.SOLID) {
+                break;
+            }
+
+            else if(adj_tiletype == TileType.BROKEN) {
                 map.getMap()[i_pos+i][j_pos] = new EmptyTile(x, y+32*i);
                 explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][6]));
-                break;
+                break;     
             }
-            else {
-                explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][2]));
+
+            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {
+                TileType last_tiletype = map.getMap()[i_pos+2][j_pos].getType();
+                if((last_tiletype == TileType.SOLID && i == 1) || i == 2) {
+                    explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][6]));
+                    break;     
+                }
+                else {
+                    explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][2]));
+                }
             }
         }
+
     }
 
     public void checkContact() {

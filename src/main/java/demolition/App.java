@@ -32,6 +32,7 @@ public class App extends PApplet {
     private int lives;
     private int level;
     private boolean released;
+    private boolean bombKeyReleased;
     private boolean win;
 
     public App() {
@@ -64,7 +65,7 @@ public class App extends PApplet {
         JSONObject config = loadJSONObject("config.json");
         levels = config.getJSONArray("levels");
         lives = config.getInt("lives");
-        map.constructMap(path);
+        map.constructMap(path, levels.getJSONObject(level).getInt("time"));
         map.loadObjects(path, lives, BombGuy_s, Red_s, Yellow_s);
         ui = new UI(UI_s);
         
@@ -75,6 +76,7 @@ public class App extends PApplet {
             ui.drawWin(this);
             return;
         }
+        map.tick();
         map.getPlayer().tick();
         for(Enemy e : map.getEnemies())
             e.tick();
@@ -90,11 +92,19 @@ public class App extends PApplet {
             ui.drawLose(this);
             return;
         }
-        ui.draw(this, map.getPlayer().getLives());
+        ui.draw(this, map.getPlayer().getLives(), map.getTimer());
     }
 
     public void keyPressed() {
-        if(released) {
+
+        if(keyCode == 32) {
+                BombGuy b = map.getPlayer();
+                map.addBomb(new Bomb(b.getX(), b.getY()+16,b.getI(), b.getJ(), Bomb_s, map));
+                bombKeyReleased = false;
+                released = true;
+            }
+
+        else if(released) {
             if(keyCode == 38) {
                 map.getPlayer().move(Direction.UP);
                 System.out.println("registered UP");
@@ -111,10 +121,6 @@ public class App extends PApplet {
                 map.getPlayer().move(Direction.RIGHT);
                 System.out.println("registered RIGHT");
             }
-            else if(keyCode == 32) {
-                BombGuy b = map.getPlayer();
-                map.getBombs().add(new Bomb(b.getX(), b.getY()+16,b.getI(), b.getJ(), Bomb_s, map));
-            }
             if(map.getPlayer().checkWin()) {
                 if(level == levels.size()-1) {
                     win = true;
@@ -123,7 +129,7 @@ public class App extends PApplet {
                 lives = map.getPlayer().getLives();
                 path = levels.getJSONObject(++level).getString("path");
                 map = new Map();
-                map.constructMap(path);
+                map.constructMap(path, levels.getJSONObject(level).getInt("time"));
                 map.loadObjects(path, lives, BombGuy_s, Red_s, Yellow_s);
             }
             released = false;
@@ -132,6 +138,7 @@ public class App extends PApplet {
 
 	public void keyReleased() {
 		released = true;
+        bombKeyReleased = true;
 	} 
 
     public static void main(String[] args) {
