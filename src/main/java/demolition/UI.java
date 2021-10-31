@@ -24,6 +24,7 @@ public class UI {
         app.stroke(239, 129, 0);
         app.rect(0, 0, 480, 64);
         app.image(playerhead, 128,18);
+        app.image(clock, 256, 18);
         app.fill(0, 0, 0);
         app.text(lives, 168, 45);
         app.text(time, 300, 45);

@@ -196,9 +196,17 @@ public class Bomb {
     }
 
     public void checkContact() {
+        List<Enemy> for_removal = new ArrayList<Enemy>();
         for(Explosion e : explosion) {
             if(e.getI() == map.getPlayer().getI() && e.getJ() == map.getPlayer().getJ())
                 map.getPlayer().kill();
+            for(Enemy en : map.getEnemies()) {
+                if(e.getI() == en.getI() && e.getJ() == en.getJ())
+                    for_removal.add(en);
+            }
+        }
+        for(Enemy e : for_removal) {
+            map.getEnemies().remove(e);
         }
     }
 }

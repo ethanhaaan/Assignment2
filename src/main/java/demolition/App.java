@@ -22,7 +22,6 @@ public class App extends PApplet {
     public static PImage[][] Yellow_s;
 
     public static String path = "level1.txt";
-    public static int[] start_pos;
     public JSONArray levels;
     public PFont font;
     
@@ -65,8 +64,8 @@ public class App extends PApplet {
         JSONObject config = loadJSONObject("config.json");
         levels = config.getJSONArray("levels");
         lives = config.getInt("lives");
-        map.constructMap(path, levels.getJSONObject(level).getInt("time"));
-        map.loadObjects(path, lives, BombGuy_s, Red_s, Yellow_s);
+        map.constructMap(path);
+        map.loadObjects(path, lives, levels.getJSONObject(level).getInt("time"), BombGuy_s, Red_s, Yellow_s);
         ui = new UI(UI_s);
         
     }
@@ -105,22 +104,14 @@ public class App extends PApplet {
             }
 
         else if(released) {
-            if(keyCode == 38) {
+            if(keyCode == 38)
                 map.getPlayer().move(Direction.UP);
-                System.out.println("registered UP");
-            }
-            else if(keyCode == 40) {
+            else if(keyCode == 40)
                 map.getPlayer().move(Direction.DOWN);
-                System.out.println("registered DOWN");
-            }
-            else if(keyCode == 37) {
+            else if(keyCode == 37)
                 map.getPlayer().move(Direction.LEFT);
-                System.out.println("registered LEFT");
-            }
-            else if(keyCode == 39) {
+            else if(keyCode == 39)
                 map.getPlayer().move(Direction.RIGHT);
-                System.out.println("registered RIGHT");
-            }
             if(map.getPlayer().checkWin()) {
                 if(level == levels.size()-1) {
                     win = true;
@@ -129,8 +120,8 @@ public class App extends PApplet {
                 lives = map.getPlayer().getLives();
                 path = levels.getJSONObject(++level).getString("path");
                 map = new Map();
-                map.constructMap(path, levels.getJSONObject(level).getInt("time"));
-                map.loadObjects(path, lives, BombGuy_s, Red_s, Yellow_s);
+                map.constructMap(path);
+                map.loadObjects(path, lives, levels.getJSONObject(level).getInt("time"), BombGuy_s, Red_s, Yellow_s);
             }
             released = false;
         }

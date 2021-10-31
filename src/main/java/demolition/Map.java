@@ -36,9 +36,6 @@ public class Map {
         return bombs;
     }
     public void addBomb(Bomb bomb) {
-        //check if bomb exists in position
-        boolean existing_bomb = false;
-        //INCOMPLETE
         bombs.add(bomb);
     }
 
@@ -49,6 +46,9 @@ public class Map {
         }
         else {
             fps_timer--;
+        }
+        if(timer == 0) {
+            player.setLives(0);
         }
     }
 
@@ -68,8 +68,7 @@ public class Map {
         return map;
     }    
 
-    public void constructMap(String path, int time) {
-        this.timer = time;
+    public void constructMap(String path) {
         try {
             File lvl_file = new File(path);
             Scanner scanobj = new Scanner(lvl_file);
@@ -92,7 +91,8 @@ public class Map {
         }
     }
 
-    public void loadObjects(String path, int lives, PImage[][] sprites, PImage[][] Red_s, PImage[][] Yellow_s) {
+    public void loadObjects(String path, int lives, int time, PImage[][] sprites, PImage[][] Red_s, PImage[][] Yellow_s) {
+        this.timer = time;
         try {
             File file = new File(path);
             Scanner scanobj = new Scanner(file);
@@ -111,5 +111,14 @@ public class Map {
         catch(FileNotFoundException e) {
             System.out.println("not working");
         }
+    }
+
+    public void resetLevel() {
+        constructMap(App.path);
+        for(Enemy e : enemies) {
+            e.resetPos();
+        }
+        player.resetPos();
+        bombs = new ArrayList<Bomb>();
     }
 }

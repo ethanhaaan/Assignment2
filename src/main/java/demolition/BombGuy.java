@@ -50,10 +50,14 @@ public class BombGuy extends GameObject {
             return;
         }
         lives--;
+        map.resetLevel();
         rspwn_immunity = 60;
     }
     public int getLives() {
         return lives;
+    }
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
 }
