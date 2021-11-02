@@ -38,6 +38,7 @@ public abstract class GameObject {
         this.map = map;
     }
     public abstract void tick();
+    public abstract void reset();
     public abstract void collisionCondition(Direction d, Map map);
 
     public void sprite_cycle() {
@@ -115,6 +116,18 @@ public abstract class GameObject {
     }
     public int getJ() {
         return j_pos;
+    }
+    public int getOriginalX() {
+        return x_original;
+    }
+    public int getOriginalY() {
+        return y_original;
+    }
+    public int getOriginalI() {
+        return i_pos_original;
+    }
+    public int getOriginalJ() {
+        return j_pos_original;
     }
     public void resetPos() {
         x = x_original;

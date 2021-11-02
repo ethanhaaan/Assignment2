@@ -14,28 +14,27 @@ public class App extends PApplet {
     public static final int HEIGHT = 480;
     public static final int FPS = 60;
 
-    public static PImage[] Wall_s;
-    public static PImage[] UI_s;
-    public static PImage[][] Bomb_s;
-    public static PImage[][] BombGuy_s;
-    public static PImage[][] Red_s;
-    public static PImage[][] Yellow_s;
+    private PImage[] Wall_s;
+    private PImage[] UI_s;
+    private PImage[][] Bomb_s;
+    private PImage[][] BombGuy_s;
+    private PImage[][] Red_s;
+    private PImage[][] Yellow_s;
 
-    public static String path = "level1.txt";
+    public static String path;
     public JSONArray levels;
     public PFont font;
     
     private UI ui;
     private Map map;
-    private int timer;
     private int lives;
+    private int time;
     private int level;
     private boolean released;
     private boolean bombKeyReleased;
     private boolean win;
 
     public App() {
-        map = new Map();
         level = 0;
         released = true;
         win = false;
@@ -63,9 +62,12 @@ public class App extends PApplet {
         //Loading configuration
         JSONObject config = loadJSONObject("config.json");
         levels = config.getJSONArray("levels");
+        path = levels.getJSONObject(0).getString("path");
         lives = config.getInt("lives");
-        map.constructMap(path);
-        map.loadObjects(path, lives, levels.getJSONObject(level).getInt("time"), BombGuy_s, Red_s, Yellow_s);
+        time = levels.getJSONObject(level).getInt("time");
+
+        //Loading map
+        map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);        
         ui = new UI(UI_s);
         
     }
@@ -91,7 +93,7 @@ public class App extends PApplet {
             ui.drawLose(this);
             return;
         }
-        ui.draw(this, map.getPlayer().getLives(), map.getTimer());
+        ui.draw(this, map.getPlayer().getLives(), map.getTime());
     }
 
     public void keyPressed() {
@@ -119,9 +121,9 @@ public class App extends PApplet {
                 }
                 lives = map.getPlayer().getLives();
                 path = levels.getJSONObject(++level).getString("path");
-                map = new Map();
+                map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
                 map.constructMap(path);
-                map.loadObjects(path, lives, levels.getJSONObject(level).getInt("time"), BombGuy_s, Red_s, Yellow_s);
+                map.loadObjects(path, lives, levels.getJSONObject(level).getInt("time"));
             }
             released = false;
         }
@@ -133,6 +135,9 @@ public class App extends PApplet {
 	} 
 
     public static void main(String[] args) {
+
+
         PApplet.main("demolition.App");
+
     }
 }

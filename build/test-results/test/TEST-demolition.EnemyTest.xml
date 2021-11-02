@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.EnemyTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-10-18T02:13:29" hostname="kali" time="0.003">
+<testsuite name="demolition.EnemyTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-11-02T06:26:45" hostname="kali" time="0.003">
   <properties/>
-  <testcase name="testEnemyLoad()" classname="demolition.EnemyTest" time="0.003"/>
+  <testcase name="testEnemyLoad()" classname="demolition.EnemyTest" time="0.001"/>
+  <testcase name="testEnemyConstructor1()" classname="demolition.EnemyTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

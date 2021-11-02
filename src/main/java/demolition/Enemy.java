@@ -33,7 +33,7 @@ public abstract class Enemy extends GameObject {
 
     public void tick() {
         sprite_cycle();
-        if(timer == 0) {
+        if(timer == 1) {
             move(current_dir);
             timer = 60;
         }
@@ -41,5 +41,11 @@ public abstract class Enemy extends GameObject {
             timer--;
         }
     }
+    public void reset() {
+        resetPos();
+        timer = map.getFPSTimer();
+        s_cycle = 0;
+    }
+
 
 }

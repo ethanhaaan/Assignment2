@@ -7,18 +7,18 @@ public class TileTest {
 
     @Test
     public void constructor() {
-        assertNotNull(new GoalTile(20, 40));
+        assertNotNull(new GoalTile(null, 20, 40));
     }
 
     @Test
     public void test1() {
-        Tile wall = new SolidWall(50, 10);
+        Tile wall = new SolidWall(null, 50, 10);
         assertEquals(wall.getX(), 50);
         assertEquals(wall.getY(), 10);
     }
     @Test
     public void test2() {
-        Tile empty = new EmptyTile(10, 10);
+        Tile empty = new EmptyTile(null, 10, 10);
         assertEquals(empty.getType(), TileType.EMPTY);
     }
 

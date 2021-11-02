@@ -100,7 +100,7 @@ public class Bomb {
             }
 
             else if(adj_tiletype == TileType.BROKEN) {
-                map.getMap()[i_pos][j_pos-i] = new EmptyTile(x-32*i, y);
+                map.getMap()[i_pos][j_pos-i] = new EmptyTile(map.Wall_s[2], x-32*i, y);
                 explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][3]));
                 break;     
             }
@@ -125,7 +125,7 @@ public class Bomb {
             }
 
             else if(adj_tiletype == TileType.BROKEN) {
-                map.getMap()[i_pos][j_pos+i] = new EmptyTile(x+32*i, y);
+                map.getMap()[i_pos][j_pos+i] = new EmptyTile(map.Wall_s[2], x+32*i, y);
                 explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][4]));
                 break;     
             }
@@ -150,7 +150,7 @@ public class Bomb {
             }
 
             else if(adj_tiletype == TileType.BROKEN) {
-                map.getMap()[i_pos-i][j_pos] = new EmptyTile(x, y-32*i);
+                map.getMap()[i_pos-i][j_pos] = new EmptyTile(map.Wall_s[2], x, y-32*i);
                 explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][5]));
                 break;     
             }
@@ -176,7 +176,7 @@ public class Bomb {
             }
 
             else if(adj_tiletype == TileType.BROKEN) {
-                map.getMap()[i_pos+i][j_pos] = new EmptyTile(x, y+32*i);
+                map.getMap()[i_pos+i][j_pos] = new EmptyTile(map.Wall_s[2], x, y+32*i);
                 explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][6]));
                 break;     
             }
@@ -206,6 +206,7 @@ public class Bomb {
             }
         }
         for(Enemy e : for_removal) {
+            map.getEnemiesDead().add(e);
             map.getEnemies().remove(e);
         }
     }

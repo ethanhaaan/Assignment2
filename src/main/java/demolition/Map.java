@@ -12,20 +12,46 @@ public class Map {
     
     private Tile[][] map;
     private List<Enemy> enemies;
+    private List<Enemy> enemies_dead;
     private List<Bomb> bombs;
     private BombGuy player;
-    private int timer;
+    private int time;
+    private int lives;
     private int fps_timer;
+    private String path;
 
-    public Map() {
+    public PImage[] Wall_s;
+    public PImage[] UI_s;
+    public PImage[][] Bomb_s;
+    public PImage[][] BombGuy_s;
+    public PImage[][] Red_s;
+    public PImage[][] Yellow_s;
+
+    public Map(String path, int lives, int time, PImage[] Wall_s, PImage[] UI_s, PImage[][] Bomb_s, PImage[][] BombGuy_s, PImage[][] Red_s, PImage[][] Yellow_s) {
         this.map = new Tile[13][15];
         this.enemies = new ArrayList<Enemy>();
+        this.enemies_dead = new ArrayList<Enemy>();
         this.bombs = new ArrayList<Bomb>();
         this.fps_timer = 60;
+        this.Wall_s = Wall_s;
+        this.UI_s = UI_s;
+        this.Bomb_s = Bomb_s;
+        this.BombGuy_s = BombGuy_s;
+        this.Red_s = Red_s;
+        this.Yellow_s = Yellow_s;
+        this.path = path;
+        this.lives = lives;
+        this.time = time;
+        constructMap(path);
+        loadObjects(path, lives, time);
     }
 
     public List<Enemy> getEnemies() {
         return enemies;
+    }
+    
+    public List<Enemy> getEnemiesDead() {
+        return enemies_dead;
     }
 
     public BombGuy getPlayer() {
@@ -35,25 +61,30 @@ public class Map {
     public List<Bomb> getBombs() {
         return bombs;
     }
+
+    public int getFPSTimer() {
+        return fps_timer;
+    }
+
     public void addBomb(Bomb bomb) {
         bombs.add(bomb);
     }
 
     public void tick() {
-        if(fps_timer == 0) {
-            timer--;
+        if(fps_timer == 1) {
+            time--;
             fps_timer = 60;
         }
         else {
             fps_timer--;
         }
-        if(timer == 0) {
+        if(time == 0) {
             player.setLives(0);
         }
     }
 
-    public int getTimer() {
-        return timer;
+    public int getTime() {
+        return time;
     }
 
     public void draw(PApplet app) {
@@ -76,23 +107,22 @@ public class Map {
                 String line = scanobj.nextLine();
                 for(int j = 0; j < 15; j++) {
                     if("W".equals(String.valueOf(line.charAt(j))))
-                        map[i][j] = new SolidWall(32*j, 32*i+64);
+                        map[i][j] = new SolidWall(Wall_s[0], 32*j, 32*i+64);
                     else if("B".equals(String.valueOf(line.charAt(j))))
-                        map[i][j] = new BrokenWall(32*j, 32*i+64);
+                        map[i][j] = new BrokenWall(Wall_s[1], 32*j, 32*i+64);
                     else if("G".equals(String.valueOf(line.charAt(j))))
-                        map[i][j] = new GoalTile(32*j, 32*i+64);
+                        map[i][j] = new GoalTile(Wall_s[3], 32*j, 32*i+64);
                     else
-                        map[i][j] = new EmptyTile(32*j, 32*i+64);
+                        map[i][j] = new EmptyTile(Wall_s[2], 32*j, 32*i+64);
                 }
             }
         }
         catch(FileNotFoundException e) {
-            System.out.println("Failed");
         }
     }
 
-    public void loadObjects(String path, int lives, int time, PImage[][] sprites, PImage[][] Red_s, PImage[][] Yellow_s) {
-        this.timer = time;
+    public void loadObjects(String path, int lives, int time) {
+        this.time = time;
         try {
             File file = new File(path);
             Scanner scanobj = new Scanner(file);
@@ -100,7 +130,7 @@ public class Map {
                 String line = scanobj.nextLine();
                 for(int j = 0; j < 15; j++) {
                     if("P".equals(String.valueOf(line.charAt(j))))
-                        player = new BombGuy(32*j, 32*i+64-16, i, j, sprites, lives, this);
+                        player = new BombGuy(32*j, 32*i+64-16, i, j, BombGuy_s, lives, this);
                     else if("R".equals(String.valueOf(line.charAt(j))))
                         enemies.add(new Red(32*j, 32*i+64-16, i, j, Red_s, this));
                     else if("Y".equals(String.valueOf(line.charAt(j))))
@@ -109,16 +139,19 @@ public class Map {
             }
         }
         catch(FileNotFoundException e) {
-            System.out.println("not working");
         }
     }
 
     public void resetLevel() {
-        constructMap(App.path);
-        for(Enemy e : enemies) {
-            e.resetPos();
+        constructMap(path);
+        for(Enemy e : enemies_dead) {
+            enemies.add(e);
         }
-        player.resetPos();
+        enemies_dead = new ArrayList<Enemy>();
+        for(Enemy e : enemies) {
+            e.reset();
+        }
+        player.reset();
         bombs = new ArrayList<Bomb>();
     }
 }
