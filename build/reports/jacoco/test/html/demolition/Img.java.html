@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Img.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Img.java</span></div><h1>Img.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.data.JSONObject;
+import processing.data.JSONArray;
+import java.util.ArrayList;
+
+<span class="nc" id="L9">public class Img {</span>
+
+    public static PImage[] loadWall(PApplet app) {
+<span class="nc" id="L12">        PImage[] img_array = new PImage[4];</span>
+<span class="nc" id="L13">        img_array[0] = app.loadImage(&quot;bin/main/wall/solid.png&quot;);</span>
+<span class="nc" id="L14">        img_array[1] = app.loadImage(&quot;bin/main/broken/broken.png&quot;);</span>
+<span class="nc" id="L15">        img_array[2] = app.loadImage(&quot;bin/main/empty/empty.png&quot;);</span>
+<span class="nc" id="L16">        img_array[3] = app.loadImage(&quot;bin/main/goal/goal.png&quot;);</span>
+<span class="nc" id="L17">        return img_array;</span>
+    }
+
+    public static PImage[][] loadBomb(PApplet app) {
+<span class="nc" id="L21">        PImage[][] img_array = new PImage[2][];</span>
+<span class="nc" id="L22">        PImage[] bombs = new PImage[9];</span>
+<span class="nc" id="L23">        PImage[] explosion = new PImage[7];</span>
+<span class="nc" id="L24">        bombs[0] = app.loadImage(&quot;bin/main/bomb/bomb1.png&quot;);</span>
+<span class="nc" id="L25">        bombs[1] = app.loadImage(&quot;bin/main/bomb/bomb2.png&quot;);</span>
+<span class="nc" id="L26">        bombs[2] = app.loadImage(&quot;bin/main/bomb/bomb3.png&quot;);</span>
+<span class="nc" id="L27">        bombs[3] = app.loadImage(&quot;bin/main/bomb/bomb4.png&quot;);</span>
+<span class="nc" id="L28">        bombs[4] = app.loadImage(&quot;bin/main/bomb/bomb5.png&quot;);</span>
+<span class="nc" id="L29">        bombs[5] = app.loadImage(&quot;bin/main/bomb/bomb6.png&quot;);</span>
+<span class="nc" id="L30">        bombs[6] = app.loadImage(&quot;bin/main/bomb/bomb7.png&quot;);</span>
+<span class="nc" id="L31">        bombs[7] = app.loadImage(&quot;bin/main/bomb/bomb8.png&quot;);</span>
+<span class="nc" id="L32">        explosion[0] = app.loadImage(&quot;bin/main/explosion/centre.png&quot;);</span>
+<span class="nc" id="L33">        explosion[1] = app.loadImage(&quot;bin/main/explosion/horizontal.png&quot;);</span>
+<span class="nc" id="L34">        explosion[2] = app.loadImage(&quot;bin/main/explosion/vertical.png&quot;);</span>
+<span class="nc" id="L35">        explosion[3] = app.loadImage(&quot;bin/main/explosion/end_left.png&quot;);</span>
+<span class="nc" id="L36">        explosion[4] = app.loadImage(&quot;bin/main/explosion/end_right.png&quot;);</span>
+<span class="nc" id="L37">        explosion[5] = app.loadImage(&quot;bin/main/explosion/end_top.png&quot;);</span>
+<span class="nc" id="L38">        explosion[6] = app.loadImage(&quot;bin/main/explosion/end_bottom.png&quot;);</span>
+<span class="nc" id="L39">        img_array[0] = bombs;</span>
+<span class="nc" id="L40">        img_array[1] = explosion;</span>
+<span class="nc" id="L41">        return img_array;</span>
+    }
+
+    public static PImage[][] loadBombGuy(PApplet app) {
+<span class="nc" id="L45">        PImage[][] img_array = new PImage[4][4];</span>
+<span class="nc" id="L46">        img_array[0][0] = app.loadImage(&quot;bin/main/player/player_left1.png&quot;);</span>
+<span class="nc" id="L47">        img_array[0][1] = app.loadImage(&quot;bin/main/player/player_left2.png&quot;);</span>
+<span class="nc" id="L48">        img_array[0][2] = app.loadImage(&quot;bin/main/player/player_left3.png&quot;);</span>
+<span class="nc" id="L49">        img_array[0][3] = app.loadImage(&quot;bin/main/player/player_left4.png&quot;);</span>
+<span class="nc" id="L50">        img_array[1][0] = app.loadImage(&quot;bin/main/player/player_right1.png&quot;);</span>
+<span class="nc" id="L51">        img_array[1][1] = app.loadImage(&quot;bin/main/player/player_right2.png&quot;);</span>
+<span class="nc" id="L52">        img_array[1][2] = app.loadImage(&quot;bin/main/player/player_right3.png&quot;);</span>
+<span class="nc" id="L53">        img_array[1][3] = app.loadImage(&quot;bin/main/player/player_right4.png&quot;);</span>
+<span class="nc" id="L54">        img_array[2][0] = app.loadImage(&quot;bin/main/player/player_up1.png&quot;);</span>
+<span class="nc" id="L55">        img_array[2][1] = app.loadImage(&quot;bin/main/player/player_up2.png&quot;);</span>
+<span class="nc" id="L56">        img_array[2][2] = app.loadImage(&quot;bin/main/player/player_up3.png&quot;);</span>
+<span class="nc" id="L57">        img_array[2][3] = app.loadImage(&quot;bin/main/player/player_up4.png&quot;);        </span>
+<span class="nc" id="L58">        img_array[3][0] = app.loadImage(&quot;bin/main/player/player1.png&quot;);</span>
+<span class="nc" id="L59">        img_array[3][1] = app.loadImage(&quot;bin/main/player/player2.png&quot;);</span>
+<span class="nc" id="L60">        img_array[3][2] = app.loadImage(&quot;bin/main/player/player3.png&quot;);</span>
+<span class="nc" id="L61">        img_array[3][3] = app.loadImage(&quot;bin/main/player/player4.png&quot;);</span>
+
+<span class="nc" id="L63">        return img_array;</span>
+    }
+
+    public static PImage[][] loadRed(PApplet app) {
+<span class="nc" id="L67">        PImage[][] img_array = new PImage[4][4];</span>
+<span class="nc" id="L68">        img_array[0][0] = app.loadImage(&quot;bin/main/red_enemy/red_left1.png&quot;);</span>
+<span class="nc" id="L69">        img_array[0][1] = app.loadImage(&quot;bin/main/red_enemy/red_left2.png&quot;);</span>
+<span class="nc" id="L70">        img_array[0][2] = app.loadImage(&quot;bin/main/red_enemy/red_left3.png&quot;);</span>
+<span class="nc" id="L71">        img_array[0][3] = app.loadImage(&quot;bin/main/red_enemy/red_left4.png&quot;);</span>
+<span class="nc" id="L72">        img_array[1][0] = app.loadImage(&quot;bin/main/red_enemy/red_right1.png&quot;);</span>
+<span class="nc" id="L73">        img_array[1][1] = app.loadImage(&quot;bin/main/red_enemy/red_right2.png&quot;);</span>
+<span class="nc" id="L74">        img_array[1][2] = app.loadImage(&quot;bin/main/red_enemy/red_right3.png&quot;);</span>
+<span class="nc" id="L75">        img_array[1][3] = app.loadImage(&quot;bin/main/red_enemy/red_right4.png&quot;);</span>
+<span class="nc" id="L76">        img_array[2][0] = app.loadImage(&quot;bin/main/red_enemy/red_up1.png&quot;);</span>
+<span class="nc" id="L77">        img_array[2][1] = app.loadImage(&quot;bin/main/red_enemy/red_up2.png&quot;);</span>
+<span class="nc" id="L78">        img_array[2][2] = app.loadImage(&quot;bin/main/red_enemy/red_up3.png&quot;);</span>
+<span class="nc" id="L79">        img_array[2][3] = app.loadImage(&quot;bin/main/red_enemy/red_up4.png&quot;);        </span>
+<span class="nc" id="L80">        img_array[3][0] = app.loadImage(&quot;bin/main/red_enemy/red_down1.png&quot;);</span>
+<span class="nc" id="L81">        img_array[3][1] = app.loadImage(&quot;bin/main/red_enemy/red_down2.png&quot;);</span>
+<span class="nc" id="L82">        img_array[3][2] = app.loadImage(&quot;bin/main/red_enemy/red_down3.png&quot;);</span>
+<span class="nc" id="L83">        img_array[3][3] = app.loadImage(&quot;bin/main/red_enemy/red_down4.png&quot;);</span>
+
+<span class="nc" id="L85">        return img_array;</span>
+    }
+
+    public static PImage[][] loadYellow(PApplet app) {
+<span class="nc" id="L89">        PImage[][] img_array = new PImage[4][4];</span>
+<span class="nc" id="L90">        img_array[0][0] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_left1.png&quot;);</span>
+<span class="nc" id="L91">        img_array[0][1] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_left2.png&quot;);</span>
+<span class="nc" id="L92">        img_array[0][2] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_left3.png&quot;);</span>
+<span class="nc" id="L93">        img_array[0][3] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_left4.png&quot;);</span>
+<span class="nc" id="L94">        img_array[1][0] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_right1.png&quot;);</span>
+<span class="nc" id="L95">        img_array[1][1] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_right2.png&quot;);</span>
+<span class="nc" id="L96">        img_array[1][2] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_right3.png&quot;);</span>
+<span class="nc" id="L97">        img_array[1][3] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_right4.png&quot;);</span>
+<span class="nc" id="L98">        img_array[2][0] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_up1.png&quot;);</span>
+<span class="nc" id="L99">        img_array[2][1] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_up2.png&quot;);</span>
+<span class="nc" id="L100">        img_array[2][2] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_up3.png&quot;);</span>
+<span class="nc" id="L101">        img_array[2][3] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_up4.png&quot;);        </span>
+<span class="nc" id="L102">        img_array[3][0] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_down1.png&quot;);</span>
+<span class="nc" id="L103">        img_array[3][1] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_down2.png&quot;);</span>
+<span class="nc" id="L104">        img_array[3][2] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_down3.png&quot;);</span>
+<span class="nc" id="L105">        img_array[3][3] = app.loadImage(&quot;bin/main/yellow_enemy/yellow_down4.png&quot;);</span>
+
+<span class="nc" id="L107">        return img_array;</span>
+    }
+
+    public static PImage[] loadUI(PApplet app) {
+<span class="nc" id="L111">        PImage[] UI = new PImage[2];</span>
+<span class="nc" id="L112">        UI[0] = app.loadImage(&quot;bin/main/icons/player.png&quot;);</span>
+<span class="nc" id="L113">        UI[1] = app.loadImage(&quot;bin/main/icons/clock.png&quot;);</span>
+<span class="nc" id="L114">        return UI;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

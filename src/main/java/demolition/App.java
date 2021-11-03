@@ -79,10 +79,9 @@ public class App extends PApplet {
         }
         map.tick();
         map.getPlayer().tick();
+        map.tickBombs();
         for(Enemy e : map.getEnemies())
             e.tick();
-        for(Bomb b : map.getBombs()) 
-            b.tick();
         map.draw(this);
         map.getPlayer().draw(this);
         for(Enemy e : map.getEnemies())
@@ -99,12 +98,10 @@ public class App extends PApplet {
     public void keyPressed() {
 
         if(keyCode == 32) {
-                BombGuy b = map.getPlayer();
-                map.addBomb(new Bomb(b.getX(), b.getY()+16,b.getI(), b.getJ(), Bomb_s, map));
+                map.addBomb();
                 bombKeyReleased = false;
                 released = true;
             }
-
         else if(released) {
             if(keyCode == 38)
                 map.getPlayer().move(Direction.UP);

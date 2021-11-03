@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bomb.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Bomb.java</span></div><h1>Bomb.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Bomb {
+    
+    private int x;
+    private int y;
+    private int i_pos;
+    private int j_pos;
+    private PImage[][] sprites;
+    private PImage current_sprite;
+    private int countdown_timer;
+    private int explosion_timer;
+    private int sprite_timer;
+    private int s_i;
+    private int s_cycle;
+    private boolean exploding;
+    private boolean exploded;
+    private Map map;
+    private List&lt;Explosion&gt; explosion;
+
+<span class="fc" id="L27">    public Bomb(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {</span>
+<span class="fc" id="L28">        this.x = x;</span>
+<span class="fc" id="L29">        this.y = y;</span>
+<span class="fc" id="L30">        this.i_pos = i_pos;</span>
+<span class="fc" id="L31">        this.j_pos = j_pos;</span>
+<span class="fc" id="L32">        this.sprites = sprites;</span>
+<span class="fc" id="L33">        this.exploding = false;</span>
+<span class="fc" id="L34">        this.exploded = false;</span>
+<span class="fc" id="L35">        this.s_cycle = 0;</span>
+<span class="fc" id="L36">        this.s_i = 0;</span>
+<span class="fc" id="L37">        this.sprite_timer = 15;</span>
+<span class="fc" id="L38">        this.countdown_timer = 120;</span>
+<span class="fc" id="L39">        this.explosion_timer = 30;</span>
+<span class="fc" id="L40">        this.explosion = new ArrayList&lt;Explosion&gt;();</span>
+<span class="fc" id="L41">        this.map = map;</span>
+<span class="fc" id="L42">    }</span>
+
+    public void tick() {
+<span class="nc bnc" id="L45" title="All 4 branches missed.">        if(!exploding &amp;&amp; countdown_timer == 0) {</span>
+<span class="nc" id="L46">            explode();</span>
+        }
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        else if(exploding) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            if(explosion_timer == 0) {</span>
+<span class="nc" id="L50">                exploded = true;</span>
+<span class="nc" id="L51">                return;</span>
+            }
+<span class="nc" id="L53">            explosion_timer--; </span>
+<span class="nc" id="L54">            checkContact();</span>
+        }
+        else {
+<span class="nc" id="L57">            countdown_timer--;</span>
+        }
+<span class="nc" id="L59">        sprite_cycle();</span>
+<span class="nc" id="L60">    }</span>
+
+    public void draw(PApplet app) {
+        //Explosion finished
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if(exploded) {</span>
+<span class="nc" id="L65">            return;</span>
+        }
+        //Explosion not started
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        else if(!exploding) {</span>
+<span class="nc" id="L69">            app.image(current_sprite, x, y);</span>
+        }
+        //In process of exploding
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        else if(exploding) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            for(Explosion e : explosion) {</span>
+<span class="nc" id="L74">                app.image(e.getSprite(), e.getX(), e.getY());</span>
+<span class="nc" id="L75">            }</span>
+        }
+            
+<span class="nc" id="L78">    }</span>
+
+    public void sprite_cycle() {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if(exploding)</span>
+<span class="nc" id="L82">            return;</span>
+<span class="nc" id="L83">        current_sprite = sprites[s_i][s_cycle];</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if(sprite_timer == 0) {</span>
+<span class="nc" id="L85">            s_cycle++;</span>
+<span class="nc" id="L86">            sprite_timer = 15;</span>
+        }
+<span class="nc" id="L88">        sprite_timer--;</span>
+<span class="nc" id="L89">    }</span>
+
+    public void explode() {
+<span class="nc" id="L92">        exploding = true;</span>
+<span class="nc" id="L93">        explosion.add(new Explosion(x, y, i_pos, j_pos, sprites[1][0]));</span>
+        //checkLeft
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        for(int i = 1; i &lt; 3; i++) {</span>
+<span class="nc" id="L96">            TileType adj_tiletype = map.getMap()[i_pos][j_pos-i].getType();</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if(adj_tiletype == TileType.SOLID) {</span>
+<span class="nc" id="L99">                break;</span>
+            }
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            else if(adj_tiletype == TileType.BROKEN) {</span>
+<span class="nc" id="L103">                map.getMap()[i_pos][j_pos-i] = new EmptyTile(map.Wall_s[2], x-32*i, y);</span>
+<span class="nc" id="L104">                explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][3]));</span>
+<span class="nc" id="L105">                break;     </span>
+            }
+
+<span class="nc bnc" id="L108" title="All 4 branches missed.">            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {</span>
+<span class="nc" id="L109">                TileType last_tiletype = map.getMap()[i_pos][j_pos-2].getType();</span>
+<span class="nc bnc" id="L110" title="All 6 branches missed.">                if((last_tiletype == TileType.SOLID &amp;&amp; i == 1) || i == 2) {</span>
+<span class="nc" id="L111">                    explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][3]));</span>
+<span class="nc" id="L112">                    break;     </span>
+                }
+                else {
+<span class="nc" id="L115">                    explosion.add(new Explosion(x-32*i, y, i_pos, j_pos-i, sprites[1][1]));</span>
+                }
+            }
+        }
+        //checkRight
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        for(int i = 1; i &lt; 3; i++) {</span>
+<span class="nc" id="L121">            TileType adj_tiletype = map.getMap()[i_pos][j_pos+i].getType();</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if(adj_tiletype == TileType.SOLID) {</span>
+<span class="nc" id="L124">                break;</span>
+            }
+
+<span class="nc bnc" id="L127" title="All 2 branches missed.">            else if(adj_tiletype == TileType.BROKEN) {</span>
+<span class="nc" id="L128">                map.getMap()[i_pos][j_pos+i] = new EmptyTile(map.Wall_s[2], x+32*i, y);</span>
+<span class="nc" id="L129">                explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][4]));</span>
+<span class="nc" id="L130">                break;     </span>
+            }
+
+<span class="nc bnc" id="L133" title="All 4 branches missed.">            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {</span>
+<span class="nc" id="L134">                TileType last_tiletype = map.getMap()[i_pos][j_pos+2].getType();</span>
+<span class="nc bnc" id="L135" title="All 6 branches missed.">                if((last_tiletype == TileType.SOLID &amp;&amp; i == 1) || i == 2) {</span>
+<span class="nc" id="L136">                    explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][4]));</span>
+<span class="nc" id="L137">                    break;     </span>
+                }
+                else {
+<span class="nc" id="L140">                    explosion.add(new Explosion(x+32*i, y, i_pos, j_pos+i, sprites[1][1]));</span>
+                }
+            }
+        }
+        //checkUp
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        for(int i = 1; i &lt; 3; i++) {</span>
+<span class="nc" id="L146">            TileType adj_tiletype = map.getMap()[i_pos-1][j_pos].getType();</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            if(adj_tiletype == TileType.SOLID) {</span>
+<span class="nc" id="L149">                break;</span>
+            }
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            else if(adj_tiletype == TileType.BROKEN) {</span>
+<span class="nc" id="L153">                map.getMap()[i_pos-i][j_pos] = new EmptyTile(map.Wall_s[2], x, y-32*i);</span>
+<span class="nc" id="L154">                explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][5]));</span>
+<span class="nc" id="L155">                break;     </span>
+            }
+
+<span class="nc bnc" id="L158" title="All 4 branches missed.">            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {</span>
+<span class="nc" id="L159">                TileType last_tiletype = map.getMap()[i_pos-2][j_pos].getType();</span>
+<span class="nc bnc" id="L160" title="All 6 branches missed.">                if((last_tiletype == TileType.SOLID &amp;&amp; i == 1) || i == 2) {</span>
+<span class="nc" id="L161">                    explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][5]));</span>
+<span class="nc" id="L162">                    break;     </span>
+                }
+                else {
+<span class="nc" id="L165">                    explosion.add(new Explosion(x, y-32*i, i_pos-i, j_pos, sprites[1][2]));</span>
+                }
+            }
+        }
+
+        //checkDown
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        for(int i = 1; i &lt; 3; i++) {</span>
+<span class="nc" id="L172">            TileType adj_tiletype = map.getMap()[i_pos+1][j_pos].getType();</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if(adj_tiletype == TileType.SOLID) {</span>
+<span class="nc" id="L175">                break;</span>
+            }
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            else if(adj_tiletype == TileType.BROKEN) {</span>
+<span class="nc" id="L179">                map.getMap()[i_pos+i][j_pos] = new EmptyTile(map.Wall_s[2], x, y+32*i);</span>
+<span class="nc" id="L180">                explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][6]));</span>
+<span class="nc" id="L181">                break;     </span>
+            }
+
+<span class="nc bnc" id="L184" title="All 4 branches missed.">            else if(adj_tiletype == TileType.EMPTY || adj_tiletype == TileType.GOAL) {</span>
+<span class="nc" id="L185">                TileType last_tiletype = map.getMap()[i_pos+2][j_pos].getType();</span>
+<span class="nc bnc" id="L186" title="All 6 branches missed.">                if((last_tiletype == TileType.SOLID &amp;&amp; i == 1) || i == 2) {</span>
+<span class="nc" id="L187">                    explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][6]));</span>
+<span class="nc" id="L188">                    break;     </span>
+                }
+                else {
+<span class="nc" id="L191">                    explosion.add(new Explosion(x, y+32*i, i_pos+i, j_pos, sprites[1][2]));</span>
+                }
+            }
+        }
+
+<span class="nc" id="L196">    }</span>
+
+    public void checkContact() {
+<span class="nc" id="L199">        List&lt;Enemy&gt; for_removal = new ArrayList&lt;Enemy&gt;();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        for(Explosion e : explosion) {</span>
+<span class="nc bnc" id="L201" title="All 4 branches missed.">            if(e.getI() == map.getPlayer().getI() &amp;&amp; e.getJ() == map.getPlayer().getJ())</span>
+<span class="nc" id="L202">                map.getPlayer().kill();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">            for(Enemy en : map.getEnemies()) {</span>
+<span class="nc bnc" id="L204" title="All 4 branches missed.">                if(e.getI() == en.getI() &amp;&amp; e.getJ() == en.getJ())</span>
+<span class="nc" id="L205">                    for_removal.add(en);</span>
+<span class="nc" id="L206">            }</span>
+<span class="nc" id="L207">        }</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        for(Enemy e : for_removal) {</span>
+<span class="nc" id="L209">            map.getEnemies().remove(e);</span>
+<span class="nc" id="L210">        }</span>
+<span class="nc" id="L211">    }</span>
+}
+
+class Explosion {
+    private int x;
+    private int y;
+    private int i_pos;
+    private int j_pos;
+    private PImage sprite;
+
+<span class="nc" id="L221">    public Explosion(int x, int y, int i_pos, int j_pos, PImage sprite) {</span>
+<span class="nc" id="L222">        this.x = x;</span>
+<span class="nc" id="L223">        this.y = y;</span>
+<span class="nc" id="L224">        this.i_pos = i_pos;</span>
+<span class="nc" id="L225">        this.j_pos = j_pos;</span>
+<span class="nc" id="L226">        this.sprite = sprite;</span>
+<span class="nc" id="L227">    }</span>
+
+    public PImage getSprite() {
+<span class="nc" id="L230">        return sprite;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L234">        return x;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L238">        return y;</span>
+    }
+
+    public int getI() {
+<span class="nc" id="L242">        return i_pos;</span>
+    }
+
+    public int getJ() {
+<span class="nc" id="L246">        return j_pos;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

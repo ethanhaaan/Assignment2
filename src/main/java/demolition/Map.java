@@ -66,8 +66,8 @@ public class Map {
         return fps_timer;
     }
 
-    public void addBomb(Bomb bomb) {
-        bombs.add(bomb);
+    public void addBomb() {
+        bombs.add(new Bomb(player.getX(), player.getY()+16, player.getI(), player.getJ(), Bomb_s, this));
     }
 
     public void tick() {
@@ -80,6 +80,13 @@ public class Map {
         }
         if(time == 0) {
             player.setLives(0);
+        }
+    }
+
+    public void tickBombs() {
+        for(Bomb b : bombs) {
+            if(b.tick())
+                return;
         }
     }
 
@@ -143,15 +150,15 @@ public class Map {
     }
 
     public void resetLevel() {
+        bombs.clear();
         constructMap(path);
         for(Enemy e : enemies_dead) {
             enemies.add(e);
         }
-        enemies_dead = new ArrayList<Enemy>();
+        enemies_dead.clear();
         for(Enemy e : enemies) {
             e.reset();
         }
         player.reset();
-        bombs = new ArrayList<Bomb>();
     }
 }

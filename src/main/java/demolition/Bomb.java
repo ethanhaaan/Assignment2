@@ -41,22 +41,25 @@ public class Bomb {
         this.map = map;
     }
 
-    public void tick() {
+    public boolean tick() {
+        boolean player_contact = false;
         if(!exploding && countdown_timer == 0) {
             explode();
         }
         else if(exploding) {
             if(explosion_timer == 0) {
                 exploded = true;
-                return;
+                return false;
             }
             explosion_timer--; 
-            checkContact();
+            if(checkContact())
+                player_contact = true;
         }
         else {
             countdown_timer--;
         }
         sprite_cycle();
+        return player_contact;
     }
 
     public void draw(PApplet app) {
@@ -195,20 +198,24 @@ public class Bomb {
 
     }
 
-    public void checkContact() {
+    public boolean checkContact() {
         List<Enemy> for_removal = new ArrayList<Enemy>();
         for(Explosion e : explosion) {
-            if(e.getI() == map.getPlayer().getI() && e.getJ() == map.getPlayer().getJ())
+            if(e.getI() == map.getPlayer().getI() && e.getJ() == map.getPlayer().getJ()) {
                 map.getPlayer().kill();
+                return true;
+            }
             for(Enemy en : map.getEnemies()) {
-                if(e.getI() == en.getI() && e.getJ() == en.getJ())
+                if(e.getI() == en.getI() && e.getJ() == en.getJ()) {
                     for_removal.add(en);
+                }
             }
         }
         for(Enemy e : for_removal) {
             map.getEnemiesDead().add(e);
             map.getEnemies().remove(e);
         }
+        return false;
     }
 }
 

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">GameObject.java</span></div><h1>GameObject.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.ArrayList;
+
+public abstract class GameObject {
+    protected int x;
+    protected int y;
+    protected int i_pos;
+    protected int j_pos;
+    protected final int x_original;
+    protected final int y_original;
+    protected final int i_pos_original;
+    protected final int j_pos_original;
+    protected PImage[][] sprites;
+    protected PImage current_sprite;
+    protected int sprite_timer;
+    protected int s_dir;
+    protected int s_cycle;
+    protected Map map;
+
+<span class="fc" id="L27">    public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {</span>
+<span class="fc" id="L28">        this.x = x;</span>
+<span class="fc" id="L29">        this.y = y;</span>
+<span class="fc" id="L30">        this.i_pos = i_pos;</span>
+<span class="fc" id="L31">        this.j_pos = j_pos;</span>
+<span class="fc" id="L32">        this.x_original = x;</span>
+<span class="fc" id="L33">        this.y_original = y;</span>
+<span class="fc" id="L34">        this.i_pos_original = i_pos;</span>
+<span class="fc" id="L35">        this.j_pos_original = j_pos;</span>
+<span class="fc" id="L36">        this.sprites = sprites;</span>
+<span class="fc" id="L37">        this.sprite_timer = 12;</span>
+<span class="fc" id="L38">        this.map = map;</span>
+<span class="fc" id="L39">    }</span>
+    public abstract void tick();
+    public abstract void collisionCondition(Direction d, Map map);
+
+    public void sprite_cycle() {
+<span class="fc" id="L44">        current_sprite = sprites[s_dir][s_cycle];</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if(sprite_timer &lt; 0) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if(s_cycle == 3) {</span>
+<span class="fc" id="L47">                s_cycle = 0;</span>
+            }
+            else
+<span class="fc" id="L50">                s_cycle++;</span>
+<span class="fc" id="L51">        sprite_timer = 12;</span>
+        }
+        else 
+<span class="fc" id="L54">            sprite_timer--;</span>
+<span class="fc" id="L55">    }</span>
+
+    public void draw(PApplet app) {
+<span class="nc" id="L58">        app.image(current_sprite, x, y);</span>
+<span class="nc" id="L59">    }</span>
+
+    public void move(Direction d) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if(checkCollision(d, map)) {</span>
+<span class="fc" id="L63">            collisionCondition(d, map);</span>
+<span class="fc" id="L64">            return;</span>
+        }
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if(d == Direction.LEFT) {</span>
+<span class="fc" id="L67">            x -= 32;</span>
+<span class="fc" id="L68">            s_dir = 0; </span>
+<span class="fc" id="L69">            j_pos--;</span>
+        }
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        else if(d == Direction.RIGHT) {</span>
+<span class="fc" id="L72">            x += 32;</span>
+<span class="fc" id="L73">            s_dir = 1;</span>
+<span class="fc" id="L74">            j_pos++;</span>
+        }
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        else if(d == Direction.UP) {</span>
+<span class="fc" id="L77">            y -= 32;</span>
+<span class="fc" id="L78">            s_dir = 2;</span>
+<span class="fc" id="L79">            i_pos--;</span>
+        }
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        else if(d == Direction.DOWN) {</span>
+<span class="fc" id="L82">            y += 32;</span>
+<span class="fc" id="L83">            s_dir = 3;</span>
+<span class="fc" id="L84">            i_pos++;</span>
+        }
+<span class="fc" id="L86">    }</span>
+
+    public boolean checkCollision(Direction d, Map map) {
+<span class="fc" id="L89">        Tile[][] tiles = map.getMap();</span>
+<span class="fc" id="L90">        TileType left_tile = tiles[i_pos][j_pos-1].getType();</span>
+<span class="fc" id="L91">        TileType right_tile = tiles[i_pos][j_pos+1].getType();</span>
+<span class="fc" id="L92">        TileType up_tile = tiles[i_pos-1][j_pos].getType();</span>
+<span class="fc" id="L93">        TileType down_tile = tiles[i_pos+1][j_pos].getType();</span>
+
+<span class="pc bpc" id="L95" title="3 of 6 branches missed.">        if(d == Direction.LEFT &amp;&amp; (left_tile == TileType.EMPTY || left_tile == TileType.GOAL))</span>
+<span class="fc" id="L96">            return false; </span>
+<span class="pc bpc" id="L97" title="1 of 6 branches missed.">        else if(d == Direction.RIGHT &amp;&amp; (right_tile == TileType.EMPTY || right_tile == TileType.GOAL))</span>
+<span class="fc" id="L98">            return false; </span>
+<span class="pc bpc" id="L99" title="1 of 6 branches missed.">        else if(d == Direction.UP &amp;&amp; (up_tile == TileType.EMPTY || up_tile == TileType.GOAL))</span>
+<span class="fc" id="L100">            return false; </span>
+<span class="pc bpc" id="L101" title="3 of 6 branches missed.">        else if(d == Direction.DOWN &amp;&amp; (down_tile == TileType.EMPTY || down_tile == TileType.GOAL))</span>
+<span class="fc" id="L102">            return false;</span>
+        else 
+<span class="fc" id="L104">            return true; </span>
+    }
+
+    public int getX() {
+<span class="fc" id="L108">        return x;</span>
+    }
+    public int getY() {
+<span class="fc" id="L111">        return y;</span>
+    }
+    public int getI() {
+<span class="fc" id="L114">        return i_pos;</span>
+    }
+    public int getJ() {
+<span class="fc" id="L117">        return j_pos;</span>
+    }
+    public int getOriginalX() {
+<span class="fc" id="L120">        return x_original;</span>
+    }
+    public int getOriginalY() {
+<span class="fc" id="L123">        return y_original;</span>
+    }
+    public int getOriginalI() {
+<span class="fc" id="L126">        return i_pos_original;</span>
+    }
+    public int getOriginalJ() {
+<span class="fc" id="L129">        return j_pos_original;</span>
+    }
+    public void resetPos() {
+<span class="fc" id="L132">        x = x_original;</span>
+<span class="fc" id="L133">        y = y_original;</span>
+<span class="fc" id="L134">        i_pos = i_pos_original;</span>
+<span class="fc" id="L135">        j_pos = j_pos_original;</span>
+<span class="fc" id="L136">    }</span>
+}
+
+<span class="fc" id="L139">enum Direction {</span>
+<span class="fc" id="L140">	LEFT, RIGHT, UP, DOWN;</span>
+    public static Direction getRandomDirection() {
+<span class="fc" id="L142">        return values()[(int)(Math.random()*4)];</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

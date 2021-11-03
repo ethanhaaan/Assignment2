@@ -4,21 +4,28 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import processing.core.PImage;
 import processing.core.PApplet;
+import processing.core.PApplet;
+import processing.data.JSONObject;
+import processing.data.JSONArray;
+import java.io.File;
 
 public class GameObjectTest{
 
     private PImage[] Wall_s = new PImage[4];
     private PImage[] UI_s;
-    private PImage[][] Bomb_s;
-    private PImage[][] BombGuy_s;
-    private PImage[][] Red_s;
-    private PImage[][] Yellow_s;
+    private PImage[][] Bomb_s = new PImage[4][4];
+    private PImage[][] BombGuy_s = new PImage[4][4];
+    private PImage[][] Red_s = new PImage[4][4];
+    private PImage[][] Yellow_s = new PImage[4][4];
+    private JSONObject config = PApplet.loadJSONObject(new File("config.json"));
+    private JSONArray levels = config.getJSONArray("levels");
+    private String path = levels.getJSONObject(0).getString("path");
+    private int lives = 3;
+    private int time = 180;
 
     @Test
     public void NullCheck1() {
-        Map map = new Map(Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-        map.constructMap("level1.txt");
-        map.loadObjects("level1.txt", 3, 180);
+        Map map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         assertNotNull(map.getPlayer());
     }
 
@@ -30,9 +37,8 @@ public class GameObjectTest{
     }
     @Test
     public void getOriginalTest() {
-        Map map = new Map(Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-        map.constructMap("level1.txt");
-        map.loadObjects("level1.txt", 3, 180);
+        MapTest.createManualFile1();
+        Map map = new Map("testcasemanuallvl101.txt", 3, 180, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         assertEquals(map.getPlayer().getI(), map.getPlayer().getOriginalI()); 
         assertEquals(map.getPlayer().getJ(), map.getPlayer().getOriginalJ()); 
         assertEquals(map.getPlayer().getX(), map.getPlayer().getOriginalX()); 
@@ -41,7 +47,7 @@ public class GameObjectTest{
 
     @Test
     public void correct_IandJ_pos_check() {
-        Map map = new Map(Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         map.constructMap("level1.txt");
         map.loadObjects("level1.txt", 3, 180);
         BombGuy test_player = map.getPlayer();
@@ -51,7 +57,7 @@ public class GameObjectTest{
     
     @Test
     public void checkMovement1() {
-        Map map = new Map(Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         map.constructMap("level1.txt");
         map.loadObjects("level1.txt", 3, 180);
         BombGuy test_player = map.getPlayer();
