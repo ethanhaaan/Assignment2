@@ -11,14 +11,14 @@ public class Yellow extends Enemy {
 
     public void collisionCondition(Direction d, Map map) {
 <span class="fc bfc" id="L13" title="All 2 branches covered.">        if(checkCollision(d, map)) {</span>
-<span class="pc bpc" id="L14" title="1 of 2 branches missed.">            if(d == Direction.UP)</span>
-<span class="nc" id="L15">                current_dir = Direction.RIGHT;</span>
-<span class="pc bpc" id="L16" title="1 of 2 branches missed.">            else if(d == Direction.RIGHT)</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">            if(d == Direction.UP)</span>
+<span class="fc" id="L15">                current_dir = Direction.RIGHT;</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">            else if(d == Direction.RIGHT)</span>
 <span class="fc" id="L17">                current_dir = Direction.DOWN;</span>
-<span class="nc bnc" id="L18" title="All 2 branches missed.">            else if(d == Direction.DOWN)</span>
-<span class="nc" id="L19">                current_dir = Direction.LEFT;</span>
-<span class="nc bnc" id="L20" title="All 2 branches missed.">            else if(d == Direction.LEFT)</span>
-<span class="nc" id="L21">                current_dir = Direction.UP;</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">            else if(d == Direction.DOWN)</span>
+<span class="fc" id="L19">                current_dir = Direction.LEFT;</span>
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">            else if(d == Direction.LEFT)</span>
+<span class="fc" id="L21">                current_dir = Direction.UP;</span>
 <span class="fc" id="L22">            collisionCondition(current_dir, map);</span>
         }
         else {

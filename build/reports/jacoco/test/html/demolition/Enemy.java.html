@@ -41,6 +41,12 @@ public abstract class Enemy extends GameObject {
 <span class="fc" id="L41">            timer--;</span>
         }
 <span class="fc" id="L43">    }</span>
+    public void reset() {
+<span class="fc" id="L45">        resetPos();</span>
+<span class="fc" id="L46">        timer = map.getFPSTimer();</span>
+<span class="fc" id="L47">        s_cycle = 0;</span>
+<span class="fc" id="L48">    }</span>
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -26,58 +26,6 @@ public class MapTest {
     private int lives = 3;
     private int time = 180;
 
-    public static void createManualFile1() {
-        try {
-            File file = new File("testcasemanuallvl101.txt");
-            file.createNewFile();
-            PrintWriter writeobj = new PrintWriter(file);
-            writeobj.println("WWWWWWWWWWWWWWW");
-            writeobj.println("WP    BBB BBBBW");
-            writeobj.println("W W W W W W W W");
-            writeobj.println("W         B B W");
-            writeobj.println("WBW W W W WBW W");
-            writeobj.println("W       R  B  W");
-            writeobj.println("W W W W W W W W");
-            writeobj.println("WB   B   B    W");
-            writeobj.println("WBW W W WBW W W");
-            writeobj.println("W    YBB   B BW");
-            writeobj.println("W WBW W W W W W");
-            writeobj.println("W       B    GW");
-            writeobj.print("WWWWWWWWWWWWWWW");
-            writeobj.close();
-        }
-        catch (FileNotFoundException e) {
-        }
-        catch (IOException e) {
-        }
-    }
-
-    public static void createManualFile2() {
-        try {
-            File file = new File("testcasemanuallvlBOMBTEST.txt");
-            file.createNewFile();
-            PrintWriter writeobj = new PrintWriter(file);
-            writeobj.println("WWWWWWWWWWWWWWW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBB BBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.println("WBBBBBBBBBBBBBW");
-            writeobj.print("WWWWWWWWWWWWWWW");
-            writeobj.close();
-        }
-        catch (FileNotFoundException e) {
-        }
-        catch (IOException e) {
-        }
-    }
-
     @Test
     public void constructMap1() {
         Map maptest = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
@@ -132,7 +80,6 @@ public class MapTest {
     @Test
     public void tickMap1() {
         Map maptest = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-        maptest.loadObjects("level1.txt", 3, 180);
         //After ticking 60 frames, the timer should have elapsed 1 second
         for(int i = 0; i < 60; i++) {
             maptest.tick();
@@ -165,11 +112,6 @@ public class MapTest {
         //Allowing the enemies to move freely
         for(int i = 0; i < 60; i++) {
             map.tick();
-            map.getPlayer().tick();
-            for(Enemy e : map.getEnemies())
-                e.tick();
-            for(Bomb b : map.getBombs()) 
-                b.tick();
         }
         //After 60 ticks (60 frames = 1 second)
         //all enemies must definitely have moved ONE space away from original position
@@ -184,6 +126,109 @@ public class MapTest {
         //Now all GameObjects positions should be the same as their original positions
         for(Enemy e : map.getEnemies()) {
             assertTrue(e.getOriginalI() == e.getI() && e.getOriginalJ() == e.getJ());
+        }
+    }
+
+    public static void createManualFile1() {
+        try {
+            File file = new File("testcasemanuallvl101.txt");
+            file.createNewFile();
+            PrintWriter writeobj = new PrintWriter(file);
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("WP    BBB BBBBW");
+            writeobj.println("W W W W W W W W");
+            writeobj.println("W         B B W");
+            writeobj.println("WBW W W W WBW W");
+            writeobj.println("W          B  W");
+            writeobj.println("W W W W W W W W");
+            writeobj.println("WB   B   B    W");
+            writeobj.println("WBW W W WBW W W");
+            writeobj.println("W     BB   B BW");
+            writeobj.println("W WBW W W W W W");
+            writeobj.println("W       B    GW");
+            writeobj.print("WWWWWWWWWWWWWWW");
+            writeobj.close();
+        }
+        catch (FileNotFoundException e) {
+        }
+        catch (IOException e) {
+        }
+    }
+
+    public static void createManualFile2() {
+        try {
+            File file = new File("testcasemanuallvlBOMBTEST.txt");
+            file.createNewFile();
+            PrintWriter writeobj = new PrintWriter(file);
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBB BBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.println("WBBBBBBBBBBBBBW");
+            writeobj.print("WWWWWWWWWWWWWWW");
+            writeobj.close();
+        }
+        catch (FileNotFoundException e) {
+        }
+        catch (IOException e) {
+        }
+    }
+
+    public static void createManualFile3() {
+        try {
+            File file = new File("testcasemanuallvlBOMBALLGOALS.txt");
+            file.createNewFile();
+            PrintWriter writeobj = new PrintWriter(file);
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGG GGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.print("WWWWWWWWWWWWWWW");
+            writeobj.close();
+        }
+        catch (FileNotFoundException e) {
+        }
+        catch (IOException e) {
+        }
+    }
+    public static void createManualFile4() {
+        try {
+            File file = new File("testcasemanuallvlENEMIES.txt");
+            file.createNewFile();
+            PrintWriter writeobj = new PrintWriter(file);
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("WP            W");
+            writeobj.println("WWWW WWWWWWWWWW");
+            writeobj.println("W  W  RW      W");
+            writeobj.println("WWWW WWWWWWWWWW");
+            writeobj.println("W  W  YW      W");
+            writeobj.println("WWWW WWWWWWWWWW");
+            writeobj.println("W  W  RW      W");
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("W             W");
+            writeobj.println("W             W");
+            writeobj.println("W             W");
+            writeobj.print("WWWWWWWWWWWWWWW");
+            writeobj.close();
+        }
+        catch (FileNotFoundException e) {
+        }
+        catch (IOException e) {
         }
     }
     

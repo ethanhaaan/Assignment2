@@ -24,6 +24,7 @@ public class App extends PApplet {
     public static String path;
     public JSONArray levels;
     public PFont font;
+    private String config_path;
     
     private UI ui;
     private Map map;
@@ -38,6 +39,7 @@ public class App extends PApplet {
         level = 0;
         released = true;
         win = false;
+        config_path = "config.json";
     }
 
     public void settings() {
@@ -60,7 +62,7 @@ public class App extends PApplet {
         UI_s = Img.loadUI(this);
 
         //Loading configuration
-        JSONObject config = loadJSONObject("config.json");
+        JSONObject config = loadJSONObject(config_path);
         levels = config.getJSONArray("levels");
         path = levels.getJSONObject(0).getString("path");
         lives = config.getInt("lives");
@@ -78,16 +80,7 @@ public class App extends PApplet {
             return;
         }
         map.tick();
-        map.getPlayer().tick();
-        map.tickBombs();
-        for(Enemy e : map.getEnemies())
-            e.tick();
         map.draw(this);
-        map.getPlayer().draw(this);
-        for(Enemy e : map.getEnemies())
-            e.draw(this);
-        for(Bomb b : map.getBombs())
-            b.draw(this);
         if(map.getPlayer().getLives() <= 0) {
             ui.drawLose(this);
             return;
@@ -131,8 +124,11 @@ public class App extends PApplet {
         bombKeyReleased = true;
 	} 
 
-    public static void main(String[] args) {
+    public void setConfig(String config_path) {
+        this.config_path = config_path;
+    }
 
+    public static void main(String[] args) {
 
         PApplet.main("demolition.App");
 

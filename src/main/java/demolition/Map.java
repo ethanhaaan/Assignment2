@@ -71,6 +71,20 @@ public class Map {
     }
 
     public void tick() {
+        player.tick();
+        tickBombs();
+        tickTimer();
+        tickEnemies();
+    }
+
+    public void tickBombs() {
+        for(Bomb b : bombs) {
+            if(b.tick())
+                return;
+        }
+    }
+
+    public void tickTimer() {
         if(fps_timer == 1) {
             time--;
             fps_timer = 60;
@@ -83,11 +97,9 @@ public class Map {
         }
     }
 
-    public void tickBombs() {
-        for(Bomb b : bombs) {
-            if(b.tick())
-                return;
-        }
+    public void tickEnemies() {
+        for(Enemy e : enemies)
+            e.tick();
     }
 
     public int getTime() {
@@ -100,6 +112,12 @@ public class Map {
                 j.draw(app);
             }
         }
+        for(Bomb b : bombs)
+            b.draw(app);       
+        for(Enemy e : enemies)
+            e.draw(app);
+        player.draw(app);
+        
     }
 
     public Tile[][] getMap() {

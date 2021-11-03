@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.ImgTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-03T08:43:47" hostname="kali" time="1.022">
+  <properties/>
+  <testcase name="basicTest()" classname="demolition.ImgTest" time="1.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

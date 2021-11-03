@@ -10,55 +10,53 @@ import java.util.List;
 public class BombGuy extends GameObject {
 
     private int lives;
-    private int rspwn_immunity;
 
     public BombGuy(int x, int y, int i_pos, int j_pos, PImage[][] sprites, int lives, Map map) {
-<span class="fc" id="L16">        super(x, y, i_pos, j_pos, sprites, map);</span>
-<span class="fc" id="L17">        this.lives = lives;</span>
-<span class="fc" id="L18">        this.s_cycle = 0;</span>
-<span class="fc" id="L19">        this.s_dir = 3;</span>
-<span class="fc" id="L20">        this.rspwn_immunity = 0;</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L15">        super(x, y, i_pos, j_pos, sprites, map);</span>
+<span class="fc" id="L16">        this.lives = lives;</span>
+<span class="fc" id="L17">        this.s_cycle = 0;</span>
+<span class="fc" id="L18">        this.s_dir = 3;</span>
+<span class="fc" id="L19">    }</span>
 
     public void tick() {
-<span class="fc" id="L24">        sprite_cycle();</span>
-<span class="fc" id="L25">        checkKill();</span>
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        if(rspwn_immunity != 0)</span>
-<span class="nc" id="L27">            rspwn_immunity--;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L22">        sprite_cycle();</span>
+<span class="fc" id="L23">        checkKill();</span>
+<span class="fc" id="L24">    }</span>
+
+    public void reset() {
+<span class="fc" id="L27">        resetPos();</span>
+<span class="fc" id="L28">        s_cycle = 0;</span>
+<span class="fc" id="L29">    }</span>
 
     public void collisionCondition(Direction d, Map map) {
-<span class="nc" id="L31">        return;</span>
+<span class="nc" id="L32">        return;</span>
     }
 
     public boolean checkWin() {
-<span class="nc" id="L35">        Tile[][] tiles = map.getMap();</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if(tiles[i_pos][j_pos].getType() == TileType.GOAL)</span>
-<span class="nc" id="L37">            return true;</span>
-<span class="nc" id="L38">        return false;</span>
+<span class="nc" id="L36">        Tile[][] tiles = map.getMap();</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if(tiles[i_pos][j_pos].getType() == TileType.GOAL)</span>
+<span class="nc" id="L38">            return true;</span>
+<span class="nc" id="L39">        return false;</span>
     }
     public void checkKill() {
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        for(Enemy e : map.getEnemies()) {</span>
-<span class="pc bpc" id="L42" title="5 of 6 branches missed.">            if(i_pos == e.getI() &amp;&amp; j_pos == e.getJ() &amp;&amp; rspwn_immunity == 0) {</span>
-<span class="nc" id="L43">                kill();</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for(Enemy e : map.getEnemies()) {</span>
+<span class="pc bpc" id="L43" title="3 of 4 branches missed.">            if(i_pos == e.getI() &amp;&amp; j_pos == e.getJ()) {</span>
+<span class="nc" id="L44">                kill();</span>
+<span class="nc" id="L45">                return;</span>
             }
-<span class="fc" id="L45">        }</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L47">        }</span>
+<span class="fc" id="L48">    }</span>
 
     public void kill() {
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if(rspwn_immunity != 0) {</span>
-<span class="nc" id="L50">            return;</span>
-        }
-<span class="nc" id="L52">        lives--;</span>
-<span class="nc" id="L53">        map.resetLevel();</span>
-<span class="nc" id="L54">        rspwn_immunity = 60;</span>
-<span class="nc" id="L55">    }</span>
+<span class="fc" id="L51">        lives--;</span>
+<span class="fc" id="L52">        map.resetLevel();</span>
+<span class="fc" id="L53">    }</span>
     public int getLives() {
-<span class="fc" id="L57">        return lives;</span>
+<span class="fc" id="L55">        return lives;</span>
     }
     public void setLives(int lives) {
-<span class="fc" id="L60">        this.lives = lives;</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L58">        this.lives = lives;</span>
+<span class="fc" id="L59">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
