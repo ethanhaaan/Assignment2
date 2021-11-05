@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.BombTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2021-11-05T06:17:12" hostname="kali" time="0.063">
+<testsuite name="demolition.BombTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2021-11-05T06:23:34" hostname="kali" time="0.048">
   <properties/>
-  <testcase name="testKill1()" classname="demolition.BombTest" time="0.028"/>
-  <testcase name="testKill2()" classname="demolition.BombTest" time="0.003"/>
+  <testcase name="testKill1()" classname="demolition.BombTest" time="0.014"/>
+  <testcase name="testKill2()" classname="demolition.BombTest" time="0.002"/>
   <testcase name="testKill3()" classname="demolition.BombTest" time="0.002"/>
-  <testcase name="constructBombTest()" classname="demolition.BombTest" time="0.001"/>
-  <testcase name="explodeBombTest1()" classname="demolition.BombTest" time="0.003"/>
-  <testcase name="explodeBombTest2()" classname="demolition.BombTest" time="0.012"/>
+  <testcase name="constructBombTest()" classname="demolition.BombTest" time="0.002"/>
+  <testcase name="explodeBombTest1()" classname="demolition.BombTest" time="0.008"/>
+  <testcase name="explodeBombTest2()" classname="demolition.BombTest" time="0.002"/>
   <testcase name="explodeBombTest3()" classname="demolition.BombTest" time="0.002"/>
   <testcase name="explodeBombTest4()" classname="demolition.BombTest" time="0.001"/>
-  <testcase name="naturalPlayBombTest1()" classname="demolition.BombTest" time="0.002"/>
-  <testcase name="tickBombTest1()" classname="demolition.BombTest" time="0.002"/>
-  <testcase name="tickBombTest2()" classname="demolition.BombTest" time="0.002"/>
+  <testcase name="naturalPlayBombTest1()" classname="demolition.BombTest" time="0.001"/>
+  <testcase name="tickBombTest1()" classname="demolition.BombTest" time="0.001"/>
+  <testcase name="tickBombTest2()" classname="demolition.BombTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

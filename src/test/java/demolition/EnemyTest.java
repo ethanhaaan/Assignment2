@@ -46,6 +46,7 @@ public class EnemyTest {
 
     @Test
     public void EnemyTest() {
+        MapTest.createManualFile5();
         //Testing if yellow enemy will respond correctly to environment
         Map map = new Map("src/test/resources/enemytestlvl.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         //Getting the an object reference to the yellow enemy using its starting position

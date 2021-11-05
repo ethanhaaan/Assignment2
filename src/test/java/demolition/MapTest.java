@@ -231,6 +231,31 @@ public class MapTest {
         catch (IOException e) {
         }
     }
+    public static void createManualFile5() {
+        try {
+            File file = new File("src/test/resources/enemytestlvl.txt");
+            file.createNewFile();
+            PrintWriter writeobj = new PrintWriter(file);
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("WP    BBB BBBBW");
+            writeobj.println("WWW W W W W W W");
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("WWWWWWWWWWWWWWW");
+            writeobj.println("W W       W   W");
+            writeobj.println("W W W WRW WWWWW");
+            writeobj.println("WWWWWWW   WWWWW");
+            writeobj.println("WWWW WWWWWWWWWW");
+            writeobj.println("WWY  W        W");
+            writeobj.println("W WW W   W    W");
+            writeobj.println("W    W  B    GW");
+            writeobj.print("WWWWWWWWWWWWWWW");
+            writeobj.close();
+        }
+        catch (FileNotFoundException e) {
+        }
+        catch (IOException e) {
+        }
+    }
     
 }
 
