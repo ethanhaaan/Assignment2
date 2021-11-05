@@ -13,10 +13,10 @@ public abstract class GameObject {
     protected int y;
     protected int i_pos;
     protected int j_pos;
-    protected final int x_original;
-    protected final int y_original;
-    protected final int i_pos_original;
-    protected final int j_pos_original;
+    private final int X_ORIGINAL;
+    private final int Y_ORIGINAL;
+    private final int I_POS_ORIGINAL;
+    private final int J_POS_ORIGINAL;
     protected PImage[][] sprites;
     protected PImage current_sprite;
     protected int sprite_timer;
@@ -39,10 +39,10 @@ public abstract class GameObject {
         this.y = y;
         this.i_pos = i_pos;
         this.j_pos = j_pos;
-        this.x_original = x;
-        this.y_original = y;
-        this.i_pos_original = i_pos;
-        this.j_pos_original = j_pos;
+        this.X_ORIGINAL = x;
+        this.Y_ORIGINAL = y;
+        this.I_POS_ORIGINAL = i_pos;
+        this.J_POS_ORIGINAL = j_pos;
         this.sprites = sprites;
         this.sprite_timer = 12;
         this.map = map;
@@ -59,7 +59,7 @@ public abstract class GameObject {
     public abstract void collisionCondition(Direction d, Map map);
 
     /**To be executed once per frame, cycles the GameObject's current_sprite being rendered to the next sprite in the array */
-    public void sprite_cycle() {
+    public void cycleSprite() {
         current_sprite = sprites[s_dir][s_cycle];
         if(sprite_timer < 0) {
             if(s_cycle == 3) {
@@ -149,26 +149,26 @@ public abstract class GameObject {
     }
     /**@return original x position of the GameObject */
     public int getOriginalX() {
-        return x_original;
+        return X_ORIGINAL;
     }
     /**@return original y position of the GameObject */
     public int getOriginalY() {
-        return y_original;
+        return Y_ORIGINAL;
     }
     /**@return the original row within the map array that the GameObject is situated on */
     public int getOriginalI() {
-        return i_pos_original;
+        return I_POS_ORIGINAL;
     }
     /**@return the original column within the map array that the GameObject is situated on */
     public int getOriginalJ() {
-        return j_pos_original;
+        return J_POS_ORIGINAL;
     }
     /**moves GameObject back to original position */
     public void resetPos() {
-        x = x_original;
-        y = y_original;
-        i_pos = i_pos_original;
-        j_pos = j_pos_original;
+        x = X_ORIGINAL;
+        y = Y_ORIGINAL;
+        i_pos = I_POS_ORIGINAL;
+        j_pos = J_POS_ORIGINAL;
     }
 }
 

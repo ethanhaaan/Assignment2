@@ -38,16 +38,35 @@ public class EnemyTest {
     @Test 
     public void testEnemyConstructor1() {
         Map map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-        map.constructMap("src/test/resources/level1.txt");
+
         Red enemy = new Red(0, 0, 0, 0, Red_s, map);
         assertNotNull(enemy);
         enemy.tick();
     }
 
     @Test
-    public void yellowEnemyTest() {
+    public void EnemyTest() {
         //Testing if yellow enemy will respond correctly to environment
-        
+        Map map = new Map("src/test/resources/enemytestlvl.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        //Getting the an object reference to the yellow enemy using its starting position
+        Enemy yellow = null;
+        for(Enemy e : map.getEnemies()) {
+            if(e.getI() == 9 && e.getJ() == 2) {
+                yellow = e;
+            }
+        }
+        for(int i = 0; i < 180; i++) {
+            map.tick();
+        }
+        //Enemy must always have turned right
+        assertEquals(yellow.getI(), 10);
+        assertEquals(yellow.getJ(), 4);
+        for(int i = 0; i < 300; i++) {
+            map.tick();
+        }
+        //Enemy must have moved in a clockwise circle
+        assertEquals(yellow.getI(), 10);
+        assertEquals(yellow.getJ(), 1);
     }
 
 }

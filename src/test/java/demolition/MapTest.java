@@ -187,7 +187,7 @@ public class MapTest {
             file.createNewFile();
             PrintWriter writeobj = new PrintWriter(file);
             writeobj.println("WWWWWWWWWWWWWWW");
-            writeobj.println("WGGGGGGGGGGGGGW");
+            writeobj.println("WGGGGGGGGGGGRYW");
             writeobj.println("WGGGGGGGGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");

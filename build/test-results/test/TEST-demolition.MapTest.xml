@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.MapTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-11-05T01:25:23" hostname="kali" time="0.012">
+<testsuite name="demolition.MapTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-11-05T04:08:31" hostname="kali" time="0.013">
   <properties/>
-  <testcase name="loadObjectsInvalid()" classname="demolition.MapTest" time="0.002"/>
+  <testcase name="loadObjectsInvalid()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="constructMap1()" classname="demolition.MapTest" time="0.001"/>
-  <testcase name="constructMap2()" classname="demolition.MapTest" time="0.001"/>
-  <testcase name="resetLevel1()" classname="demolition.MapTest" time="0.0"/>
-  <testcase name="getBombTest()" classname="demolition.MapTest" time="0.0"/>
-  <testcase name="loadObjects1()" classname="demolition.MapTest" time="0.0"/>
-  <testcase name="tickMap1()" classname="demolition.MapTest" time="0.0"/>
-  <testcase name="tickMap2()" classname="demolition.MapTest" time="0.0"/>
+  <testcase name="constructMap2()" classname="demolition.MapTest" time="0.0"/>
+  <testcase name="resetLevel1()" classname="demolition.MapTest" time="0.001"/>
+  <testcase name="getBombTest()" classname="demolition.MapTest" time="0.002"/>
+  <testcase name="loadObjects1()" classname="demolition.MapTest" time="0.001"/>
+  <testcase name="tickMap1()" classname="demolition.MapTest" time="0.001"/>
+  <testcase name="tickMap2()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="tickMap3()" classname="demolition.MapTest" time="0.002"/>
-  <testcase name="constructMapInvalid()" classname="demolition.MapTest" time="0.0"/>
+  <testcase name="constructMapInvalid()" classname="demolition.MapTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

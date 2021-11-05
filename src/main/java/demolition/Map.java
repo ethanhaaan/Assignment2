@@ -20,11 +20,17 @@ public class Map {
     private int fps_timer;
     private String path;
 
+    /**Sprite array for different wall types */
     public PImage[] Wall_s;
+    /**Sprite array for UI */
     public PImage[] UI_s;
+    /**Sprite Arrayfor bombs */
     public PImage[][] Bomb_s;
+    /**Sprite Array for Bomb Guy */
     public PImage[][] BombGuy_s;
+    /**Sprite Array for the red enemy*/
     public PImage[][] Red_s;
+    /**Sprite Array for the yellow enemy */
     public PImage[][] Yellow_s;
 
     /**

@@ -41,9 +41,9 @@ public abstract class Enemy extends GameObject {
         }
         s_cycle = 0;
     }
-    /**To be executed once every frame, calls {@link #sprite_cycle()} to cycle the sprite in the array and calls {@link GameObject#move(Direction d)} once every 60 frames */
+    /**To be executed once every frame, calls {@link #cycleSprite()} to cycle the sprite in the array and calls {@link GameObject#move(Direction d)} once every 60 frames */
     public void tick() {
-        sprite_cycle();
+        cycleSprite();
         if(timer == 1) {
             move(current_dir);
             timer = 60;

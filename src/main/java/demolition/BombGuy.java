@@ -29,9 +29,9 @@ public class BombGuy extends GameObject {
         this.s_dir = 3;
     }
 
-    /** To be executed once every frame, calls {@link GameObject#sprite_cycle()} and {@link #checkKill()} */
+    /** To be executed once every frame, calls {@link GameObject#cycleSprite()} and {@link #checkKill()} */
     public void tick() {
-        sprite_cycle();
+        cycleSprite();
         checkKill();
     }
     /** Calls {@link GameObject#resetPos()} and changes the sprite being drawn to the first sprite in the cycle array */

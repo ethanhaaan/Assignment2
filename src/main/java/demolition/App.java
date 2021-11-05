@@ -40,7 +40,7 @@ public class App extends PApplet {
         level = 0;
         released = true;
         win = false;
-        config_path = "src/test/resources/config.json";
+        config_path = "config.json";
     }
 
     /**establishes the size of the PApplet window to be WIDTH (480) and HEIGHT (480) */
@@ -117,9 +117,8 @@ public class App extends PApplet {
                 }
                 lives = map.getPlayer().getLives();
                 path = levels.getJSONObject(++level).getString("path");
+                time = levels.getJSONObject(level).getInt("time");
                 map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-                map.constructMap(path);
-                map.loadObjects(path, lives, levels.getJSONObject(level).getInt("time"));
             }
             released = false;
         }

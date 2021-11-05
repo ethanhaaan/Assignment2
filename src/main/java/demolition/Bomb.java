@@ -67,7 +67,7 @@ public class Bomb {
 
     /**
     * To be executed once every frame,
-    * decrements timers, calls {@link #sprite_cycle()} per execution and calls {@link #explode()} once exploded.
+    * decrements timers, calls {@link #cycleSprite()} per execution and calls {@link #explode()} once exploded.
     * @return true if explosion made contact with player
     */
 
@@ -88,7 +88,7 @@ public class Bomb {
         else {
             countdown_timer--;
         }
-        sprite_cycle();
+        cycleSprite();
         return player_contact;
     }
 
@@ -121,7 +121,7 @@ public class Bomb {
     * cycles the sprite by moving to the next PImage in the PImage[] array
      */
 
-    public void sprite_cycle() {
+    public void cycleSprite() {
         if(exploding)
             return;
         current_sprite = sprites[s_i][s_cycle];
