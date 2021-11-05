@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.MapTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-11-05T04:08:31" hostname="kali" time="0.013">
+<testsuite name="demolition.MapTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-11-05T06:17:14" hostname="kali" time="0.012">
   <properties/>
   <testcase name="loadObjectsInvalid()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="constructMap1()" classname="demolition.MapTest" time="0.001"/>
-  <testcase name="constructMap2()" classname="demolition.MapTest" time="0.0"/>
+  <testcase name="constructMap2()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="resetLevel1()" classname="demolition.MapTest" time="0.001"/>
-  <testcase name="getBombTest()" classname="demolition.MapTest" time="0.002"/>
+  <testcase name="getBombTest()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="loadObjects1()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="tickMap1()" classname="demolition.MapTest" time="0.001"/>
   <testcase name="tickMap2()" classname="demolition.MapTest" time="0.001"/>

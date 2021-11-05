@@ -13,10 +13,10 @@ public abstract class GameObject {
     protected int y;
     protected int i_pos;
     protected int j_pos;
-    protected final int x_original;
-    protected final int y_original;
-    protected final int i_pos_original;
-    protected final int j_pos_original;
+    private final int X_ORIGINAL;
+    private final int Y_ORIGINAL;
+    private final int I_POS_ORIGINAL;
+    private final int J_POS_ORIGINAL;
     protected PImage[][] sprites;
     protected PImage current_sprite;
     protected int sprite_timer;
@@ -39,10 +39,10 @@ public abstract class GameObject {
 <span class="fc" id="L39">        this.y = y;</span>
 <span class="fc" id="L40">        this.i_pos = i_pos;</span>
 <span class="fc" id="L41">        this.j_pos = j_pos;</span>
-<span class="fc" id="L42">        this.x_original = x;</span>
-<span class="fc" id="L43">        this.y_original = y;</span>
-<span class="fc" id="L44">        this.i_pos_original = i_pos;</span>
-<span class="fc" id="L45">        this.j_pos_original = j_pos;</span>
+<span class="fc" id="L42">        this.X_ORIGINAL = x;</span>
+<span class="fc" id="L43">        this.Y_ORIGINAL = y;</span>
+<span class="fc" id="L44">        this.I_POS_ORIGINAL = i_pos;</span>
+<span class="fc" id="L45">        this.J_POS_ORIGINAL = j_pos;</span>
 <span class="fc" id="L46">        this.sprites = sprites;</span>
 <span class="fc" id="L47">        this.sprite_timer = 12;</span>
 <span class="fc" id="L48">        this.map = map;</span>
@@ -59,7 +59,7 @@ public abstract class GameObject {
     public abstract void collisionCondition(Direction d, Map map);
 
     /**To be executed once per frame, cycles the GameObject's current_sprite being rendered to the next sprite in the array */
-    public void sprite_cycle() {
+    public void cycleSprite() {
 <span class="fc" id="L63">        current_sprite = sprites[s_dir][s_cycle];</span>
 <span class="fc bfc" id="L64" title="All 2 branches covered.">        if(sprite_timer &lt; 0) {</span>
 <span class="fc bfc" id="L65" title="All 2 branches covered.">            if(s_cycle == 3) {</span>
@@ -149,26 +149,26 @@ public abstract class GameObject {
     }
     /**@return original x position of the GameObject */
     public int getOriginalX() {
-<span class="fc" id="L152">        return x_original;</span>
+<span class="fc" id="L152">        return X_ORIGINAL;</span>
     }
     /**@return original y position of the GameObject */
     public int getOriginalY() {
-<span class="fc" id="L156">        return y_original;</span>
+<span class="fc" id="L156">        return Y_ORIGINAL;</span>
     }
     /**@return the original row within the map array that the GameObject is situated on */
     public int getOriginalI() {
-<span class="fc" id="L160">        return i_pos_original;</span>
+<span class="fc" id="L160">        return I_POS_ORIGINAL;</span>
     }
     /**@return the original column within the map array that the GameObject is situated on */
     public int getOriginalJ() {
-<span class="fc" id="L164">        return j_pos_original;</span>
+<span class="fc" id="L164">        return J_POS_ORIGINAL;</span>
     }
     /**moves GameObject back to original position */
     public void resetPos() {
-<span class="fc" id="L168">        x = x_original;</span>
-<span class="fc" id="L169">        y = y_original;</span>
-<span class="fc" id="L170">        i_pos = i_pos_original;</span>
-<span class="fc" id="L171">        j_pos = j_pos_original;</span>
+<span class="fc" id="L168">        x = X_ORIGINAL;</span>
+<span class="fc" id="L169">        y = Y_ORIGINAL;</span>
+<span class="fc" id="L170">        i_pos = I_POS_ORIGINAL;</span>
+<span class="fc" id="L171">        j_pos = J_POS_ORIGINAL;</span>
 <span class="fc" id="L172">    }</span>
 }
 

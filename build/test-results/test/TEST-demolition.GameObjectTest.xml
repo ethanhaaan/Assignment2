@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.GameObjectTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-11-05T04:08:31" hostname="kali" time="0.013">
+<testsuite name="demolition.GameObjectTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-11-05T06:17:14" hostname="kali" time="0.014">
   <properties/>
   <testcase name="checkMovement1()" classname="demolition.GameObjectTest" time="0.001"/>
   <testcase name="checkMovement2()" classname="demolition.GameObjectTest" time="0.001"/>
   <testcase name="NullCheck1()" classname="demolition.GameObjectTest" time="0.001"/>
   <testcase name="getOriginalTest()" classname="demolition.GameObjectTest" time="0.001"/>
-  <testcase name="correct_IandJ_pos_check()" classname="demolition.GameObjectTest" time="0.001"/>
+  <testcase name="correct_IandJ_pos_check()" classname="demolition.GameObjectTest" time="0.0"/>
   <testcase name="tickTest1()" classname="demolition.GameObjectTest" time="0.0"/>
   <testcase name="checkWinTest()" classname="demolition.GameObjectTest" time="0.004"/>
   <testcase name="checkKillTest()" classname="demolition.GameObjectTest" time="0.002"/>

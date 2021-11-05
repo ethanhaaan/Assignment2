@@ -29,9 +29,9 @@ public class BombGuy extends GameObject {
 <span class="fc" id="L29">        this.s_dir = 3;</span>
 <span class="fc" id="L30">    }</span>
 
-    /** To be executed once every frame, calls {@link GameObject#sprite_cycle()} and {@link #checkKill()} */
+    /** To be executed once every frame, calls {@link GameObject#cycleSprite()} and {@link #checkKill()} */
     public void tick() {
-<span class="fc" id="L34">        sprite_cycle();</span>
+<span class="fc" id="L34">        cycleSprite();</span>
 <span class="fc" id="L35">        checkKill();</span>
 <span class="fc" id="L36">    }</span>
     /** Calls {@link GameObject#resetPos()} and changes the sprite being drawn to the first sprite in the cycle array */

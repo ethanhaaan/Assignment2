@@ -40,7 +40,7 @@ public class App extends PApplet {
 <span class="fc" id="L40">        level = 0;</span>
 <span class="fc" id="L41">        released = true;</span>
 <span class="fc" id="L42">        win = false;</span>
-<span class="fc" id="L43">        config_path = &quot;src/test/resources/config.json&quot;;</span>
+<span class="fc" id="L43">        config_path = &quot;config.json&quot;;</span>
 <span class="fc" id="L44">    }</span>
 
     /**establishes the size of the PApplet window to be WIDTH (480) and HEIGHT (480) */
@@ -117,33 +117,32 @@ public class App extends PApplet {
                 }
 <span class="fc" id="L118">                lives = map.getPlayer().getLives();</span>
 <span class="fc" id="L119">                path = levels.getJSONObject(++level).getString(&quot;path&quot;);</span>
-<span class="fc" id="L120">                map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);</span>
-<span class="fc" id="L121">                map.constructMap(path);</span>
-<span class="fc" id="L122">                map.loadObjects(path, lives, levels.getJSONObject(level).getInt(&quot;time&quot;));</span>
+<span class="fc" id="L120">                time = levels.getJSONObject(level).getInt(&quot;time&quot;);</span>
+<span class="fc" id="L121">                map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);</span>
             }
-<span class="fc" id="L124">            released = false;</span>
+<span class="fc" id="L123">            released = false;</span>
         }
-<span class="fc" id="L126">    }</span>
+<span class="fc" id="L125">    }</span>
     /**Sets released to true, indicating previous key has been released so a {@link #keyPressed()} will cause the player to move */
 	public void keyReleased() {
-<span class="fc" id="L129">		released = true;</span>
-<span class="fc" id="L130">        bombKeyReleased = true;</span>
-<span class="fc" id="L131">	} </span>
+<span class="fc" id="L128">		released = true;</span>
+<span class="fc" id="L129">        bombKeyReleased = true;</span>
+<span class="fc" id="L130">	} </span>
     /**Changes the path to the config file 
     * @param config_path path of the config file */
     public void setConfig(String config_path) {
-<span class="fc" id="L135">        this.config_path = config_path;</span>
-<span class="fc" id="L136">    }</span>
+<span class="fc" id="L134">        this.config_path = config_path;</span>
+<span class="fc" id="L135">    }</span>
     /**Main method of game 
     * @param args Command line arguments (not used) */
     public static void main(String[] args) {
-<span class="nc" id="L140">        PApplet.main(&quot;demolition.App&quot;);</span>
-<span class="nc" id="L141">    }</span>
+<span class="nc" id="L139">        PApplet.main(&quot;demolition.App&quot;);</span>
+<span class="nc" id="L140">    }</span>
     //Methods purely for testing
-<span class="fc" id="L143">    public Map getMap() {return map;}</span>
-<span class="fc" id="L144">    public void newMap(String path) {map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);}</span>
-<span class="fc" id="L145">    public int getLevel() {return level;}</span>
-<span class="fc" id="L146">    public void setWin(boolean b) {win = b;}</span>
-<span class="fc" id="L147">    public void setLevel(int level) {this.level = level;}</span>
+<span class="fc" id="L142">    public Map getMap() {return map;}</span>
+<span class="fc" id="L143">    public void newMap(String path) {map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);}</span>
+<span class="fc" id="L144">    public int getLevel() {return level;}</span>
+<span class="fc" id="L145">    public void setWin(boolean b) {win = b;}</span>
+<span class="fc" id="L146">    public void setLevel(int level) {this.level = level;}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

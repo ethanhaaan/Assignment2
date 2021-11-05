@@ -108,7 +108,7 @@ public class BombTest {
     //Allowing bomb to naturally tick to explosion
     public void tickBombTest1() {
         MapTest.createManualFile2();
-        Map map = new Map("testcasemanuallvlBOMBTEST.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvlBOMBTEST.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         Bomb bomb = new Bomb(0, 0, 5, 7, Bomb_s, map);
 
         //After 120 ticks (2 seconds)

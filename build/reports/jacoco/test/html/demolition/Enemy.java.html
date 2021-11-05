@@ -41,9 +41,9 @@ public abstract class Enemy extends GameObject {
         }
 <span class="fc" id="L42">        s_cycle = 0;</span>
 <span class="fc" id="L43">    }</span>
-    /**To be executed once every frame, calls {@link #sprite_cycle()} to cycle the sprite in the array and calls {@link GameObject#move(Direction d)} once every 60 frames */
+    /**To be executed once every frame, calls {@link #cycleSprite()} to cycle the sprite in the array and calls {@link GameObject#move(Direction d)} once every 60 frames */
     public void tick() {
-<span class="fc" id="L46">        sprite_cycle();</span>
+<span class="fc" id="L46">        cycleSprite();</span>
 <span class="fc bfc" id="L47" title="All 2 branches covered.">        if(timer == 1) {</span>
 <span class="fc" id="L48">            move(current_dir);</span>
 <span class="fc" id="L49">            timer = 60;</span>
