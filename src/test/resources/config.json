@@ -1,0 +1,17 @@
+{
+    "levels": [
+      {
+        "path": "src/test/resources/testcasemanuallvl101.txt",
+        "time": 180
+      },
+      {
+        "path": "src/test/resources/testcasemanuallvlBOMBALLGOALS.txt",
+        "time": 180
+      },
+      {
+        "path": "src/test/resources/testcasemanuallvlBOMBALLGOALS.txt",
+        "time": 180
+      }      
+    ],
+    "lives": 3
+  }

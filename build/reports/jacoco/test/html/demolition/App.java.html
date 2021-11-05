@@ -24,6 +24,7 @@ public class App extends PApplet {
     public static String path;
     public JSONArray levels;
     public PFont font;
+    private String config_path;
     
     private UI ui;
     private Map map;
@@ -34,98 +35,114 @@ public class App extends PApplet {
     private boolean bombKeyReleased;
     private boolean win;
 
-<span class="nc" id="L37">    public App() {</span>
-<span class="nc" id="L38">        level = 0;</span>
-<span class="nc" id="L39">        released = true;</span>
-<span class="nc" id="L40">        win = false;</span>
-<span class="nc" id="L41">    }</span>
+    /**Constructor for App object */
+<span class="fc" id="L39">    public App() {</span>
+<span class="fc" id="L40">        level = 0;</span>
+<span class="fc" id="L41">        released = true;</span>
+<span class="fc" id="L42">        win = false;</span>
+<span class="fc" id="L43">        config_path = &quot;src/test/resources/config.json&quot;;</span>
+<span class="fc" id="L44">    }</span>
 
+    /**establishes the size of the PApplet window to be WIDTH (480) and HEIGHT (480) */
     public void settings() {
-<span class="nc" id="L44">        size(WIDTH, HEIGHT); </span>
-<span class="nc" id="L45">    }</span>
+<span class="fc" id="L48">        size(WIDTH, HEIGHT); </span>
+<span class="fc" id="L49">    }</span>
 
+    /**Called to setup the applet, loads and stores all sprites, loads config file, creates new {@link Map} and new {@link UI} */
     public void setup() {
-<span class="nc" id="L48">        frameRate(FPS);</span>
+<span class="fc" id="L53">        frameRate(FPS);</span>
 
         //Font
-<span class="nc" id="L51">        font = createFont(&quot;bin/main/PressStart2P-Regular.ttf&quot;, 20);</span>
-<span class="nc" id="L52">        textFont(font);</span>
+<span class="fc" id="L56">        font = createFont(&quot;bin/main/PressStart2P-Regular.ttf&quot;, 20);</span>
+<span class="fc" id="L57">        textFont(font);</span>
 
         //Loading sprites
-<span class="nc" id="L55">        Wall_s = Img.loadWall(this);</span>
-<span class="nc" id="L56">        Red_s = Img.loadRed(this);</span>
-<span class="nc" id="L57">        Yellow_s = Img.loadYellow(this);</span>
-<span class="nc" id="L58">        BombGuy_s = Img.loadBombGuy(this);</span>
-<span class="nc" id="L59">        Bomb_s = Img.loadBomb(this);</span>
-<span class="nc" id="L60">        UI_s = Img.loadUI(this);</span>
+<span class="fc" id="L60">        Wall_s = Img.loadWall(this);</span>
+<span class="fc" id="L61">        Red_s = Img.loadRed(this);</span>
+<span class="fc" id="L62">        Yellow_s = Img.loadYellow(this);</span>
+<span class="fc" id="L63">        BombGuy_s = Img.loadBombGuy(this);</span>
+<span class="fc" id="L64">        Bomb_s = Img.loadBomb(this);</span>
+<span class="fc" id="L65">        UI_s = Img.loadUI(this);</span>
 
         //Loading configuration
-<span class="nc" id="L63">        JSONObject config = loadJSONObject(&quot;config.json&quot;);</span>
-<span class="nc" id="L64">        levels = config.getJSONArray(&quot;levels&quot;);</span>
-<span class="nc" id="L65">        path = levels.getJSONObject(0).getString(&quot;path&quot;);</span>
-<span class="nc" id="L66">        lives = config.getInt(&quot;lives&quot;);</span>
-<span class="nc" id="L67">        time = levels.getJSONObject(level).getInt(&quot;time&quot;);</span>
+<span class="fc" id="L68">        JSONObject config = loadJSONObject(config_path);</span>
+<span class="fc" id="L69">        levels = config.getJSONArray(&quot;levels&quot;);</span>
+<span class="fc" id="L70">        path = levels.getJSONObject(0).getString(&quot;path&quot;);</span>
+<span class="fc" id="L71">        lives = config.getInt(&quot;lives&quot;);</span>
+<span class="fc" id="L72">        time = levels.getJSONObject(level).getInt(&quot;time&quot;);</span>
 
         //Loading map
-<span class="nc" id="L70">        map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);        </span>
-<span class="nc" id="L71">        ui = new UI(UI_s);</span>
+<span class="fc" id="L75">        map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);        </span>
+<span class="fc" id="L76">        ui = new UI(UI_s);</span>
         
-<span class="nc" id="L73">    }</span>
-
+<span class="fc" id="L78">    }</span>
+    /**Called upon once every frame, ticks every object in the map then draws all objects in the game.
+    If player has won (reached goal tile of final level) then the win screen is constantly drawn
+    If player has lost (lives are at 0), then the lose screen is constantly drawn
+    Otherwise, all objects are drawn as normal including UI. */
     public void draw() {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        if(win) {</span>
-<span class="nc" id="L77">            ui.drawWin(this);</span>
-<span class="nc" id="L78">            return;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if(win) {</span>
+<span class="fc" id="L85">            ui.drawWin(this);</span>
+<span class="fc" id="L86">            return;</span>
         }
-<span class="nc" id="L80">        map.tick();</span>
-<span class="nc" id="L81">        map.draw(this);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        if(map.getPlayer().getLives() &lt;= 0) {</span>
-<span class="nc" id="L83">            ui.drawLose(this);</span>
-<span class="nc" id="L84">            return;</span>
+<span class="fc" id="L88">        map.tick();</span>
+<span class="fc" id="L89">        map.draw(this);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if(map.getPlayer().getLives() &lt;= 0) {</span>
+<span class="fc" id="L91">            ui.drawLose(this);</span>
+<span class="fc" id="L92">            return;</span>
         }
-<span class="nc" id="L86">        ui.draw(this, map.getPlayer().getLives(), map.getTime());</span>
-<span class="nc" id="L87">    }</span>
-
+<span class="fc" id="L94">        ui.draw(this, map.getPlayer().getLives(), map.getTime());</span>
+<span class="fc" id="L95">    }</span>
+    /**Called when a key is pressed and previous key released, moves player in direction of arrow key press, or places a bomb at players position if spacebar pressed */
     public void keyPressed() {
 
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        if(keyCode == 32) {</span>
-<span class="nc" id="L92">                map.addBomb();</span>
-<span class="nc" id="L93">                bombKeyReleased = false;</span>
-<span class="nc" id="L94">                released = true;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if(keyCode == 32) {</span>
+<span class="fc" id="L100">                map.addBomb();</span>
+<span class="fc" id="L101">                bombKeyReleased = false;</span>
+<span class="fc" id="L102">                released = true;</span>
             }
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        else if(released) {</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">            if(keyCode == 38)</span>
-<span class="nc" id="L98">                map.getPlayer().move(Direction.UP);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">            else if(keyCode == 40)</span>
-<span class="nc" id="L100">                map.getPlayer().move(Direction.DOWN);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">            else if(keyCode == 37)</span>
-<span class="nc" id="L102">                map.getPlayer().move(Direction.LEFT);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">            else if(keyCode == 39)</span>
-<span class="nc" id="L104">                map.getPlayer().move(Direction.RIGHT);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">            if(map.getPlayer().checkWin()) {</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">                if(level == levels.size()-1) {</span>
-<span class="nc" id="L107">                    win = true;</span>
-<span class="nc" id="L108">                    return;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        else if(released) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            if(keyCode == 38)</span>
+<span class="fc" id="L106">                map.getPlayer().move(Direction.UP);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            else if(keyCode == 40)</span>
+<span class="fc" id="L108">                map.getPlayer().move(Direction.DOWN);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            else if(keyCode == 37)</span>
+<span class="fc" id="L110">                map.getPlayer().move(Direction.LEFT);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            else if(keyCode == 39)</span>
+<span class="fc" id="L112">                map.getPlayer().move(Direction.RIGHT);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            if(map.getPlayer().checkWin()) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                if(level == levels.size()-1) {</span>
+<span class="fc" id="L115">                    win = true;</span>
+<span class="fc" id="L116">                    return;</span>
                 }
-<span class="nc" id="L110">                lives = map.getPlayer().getLives();</span>
-<span class="nc" id="L111">                path = levels.getJSONObject(++level).getString(&quot;path&quot;);</span>
-<span class="nc" id="L112">                map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);</span>
-<span class="nc" id="L113">                map.constructMap(path);</span>
-<span class="nc" id="L114">                map.loadObjects(path, lives, levels.getJSONObject(level).getInt(&quot;time&quot;));</span>
+<span class="fc" id="L118">                lives = map.getPlayer().getLives();</span>
+<span class="fc" id="L119">                path = levels.getJSONObject(++level).getString(&quot;path&quot;);</span>
+<span class="fc" id="L120">                map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);</span>
+<span class="fc" id="L121">                map.constructMap(path);</span>
+<span class="fc" id="L122">                map.loadObjects(path, lives, levels.getJSONObject(level).getInt(&quot;time&quot;));</span>
             }
-<span class="nc" id="L116">            released = false;</span>
+<span class="fc" id="L124">            released = false;</span>
         }
-<span class="nc" id="L118">    }</span>
-
+<span class="fc" id="L126">    }</span>
+    /**Sets released to true, indicating previous key has been released so a {@link #keyPressed()} will cause the player to move */
 	public void keyReleased() {
-<span class="nc" id="L121">		released = true;</span>
-<span class="nc" id="L122">        bombKeyReleased = true;</span>
-<span class="nc" id="L123">	} </span>
-
+<span class="fc" id="L129">		released = true;</span>
+<span class="fc" id="L130">        bombKeyReleased = true;</span>
+<span class="fc" id="L131">	} </span>
+    /**Changes the path to the config file 
+    * @param config_path path of the config file */
+    public void setConfig(String config_path) {
+<span class="fc" id="L135">        this.config_path = config_path;</span>
+<span class="fc" id="L136">    }</span>
+    /**Main method of game 
+    * @param args Command line arguments (not used) */
     public static void main(String[] args) {
-
-<span class="nc" id="L127">        PApplet.main(&quot;demolition.App&quot;);</span>
-
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L140">        PApplet.main(&quot;demolition.App&quot;);</span>
+<span class="nc" id="L141">    }</span>
+<span class="fc" id="L142">    public Map getMap() {return map;}</span>
+<span class="fc" id="L143">    public void newMap(String path) {map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);}</span>
+<span class="fc" id="L144">    public int getLevel() {return level;}</span>
+<span class="fc" id="L145">    public void setWin(boolean b) {win = b;}</span>
+<span class="fc" id="L146">    public void setLevel(int level) {this.level = level;}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

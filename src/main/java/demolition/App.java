@@ -35,17 +35,20 @@ public class App extends PApplet {
     private boolean bombKeyReleased;
     private boolean win;
 
+    /**Constructor for App object */
     public App() {
         level = 0;
         released = true;
         win = false;
-        config_path = "config.json";
+        config_path = "src/test/resources/config.json";
     }
 
+    /**establishes the size of the PApplet window to be WIDTH (480) and HEIGHT (480) */
     public void settings() {
         size(WIDTH, HEIGHT); 
     }
 
+    /**Called to setup the applet, loads and stores all sprites, loads config file, creates new {@link Map} and new {@link UI} */
     public void setup() {
         frameRate(FPS);
 
@@ -73,7 +76,10 @@ public class App extends PApplet {
         ui = new UI(UI_s);
         
     }
-
+    /**Called upon once every frame, ticks every object in the map then draws all objects in the game.
+    If player has won (reached goal tile of final level) then the win screen is constantly drawn
+    If player has lost (lives are at 0), then the lose screen is constantly drawn
+    Otherwise, all objects are drawn as normal including UI. */
     public void draw() {
         if(win) {
             ui.drawWin(this);
@@ -87,7 +93,7 @@ public class App extends PApplet {
         }
         ui.draw(this, map.getPlayer().getLives(), map.getTime());
     }
-
+    /**Called when a key is pressed and previous key released, moves player in direction of arrow key press, or places a bomb at players position if spacebar pressed */
     public void keyPressed() {
 
         if(keyCode == 32) {
@@ -118,19 +124,25 @@ public class App extends PApplet {
             released = false;
         }
     }
-
+    /**Sets released to true, indicating previous key has been released so a {@link #keyPressed()} will cause the player to move */
 	public void keyReleased() {
 		released = true;
         bombKeyReleased = true;
 	} 
-
+    /**Changes the path to the config file 
+    * @param config_path path of the config file */
     public void setConfig(String config_path) {
         this.config_path = config_path;
     }
-
+    /**Main method of game 
+    * @param args Command line arguments (not used) */
     public static void main(String[] args) {
-
         PApplet.main("demolition.App");
-
     }
+    //Methods purely for testing
+    public Map getMap() {return map;}
+    public void newMap(String path) {map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);}
+    public int getLevel() {return level;}
+    public void setWin(boolean b) {win = b;}
+    public void setLevel(int level) {this.level = level;}
 }

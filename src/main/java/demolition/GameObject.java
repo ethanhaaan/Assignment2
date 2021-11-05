@@ -24,6 +24,16 @@ public abstract class GameObject {
     protected int s_cycle;
     protected Map map;
 
+    /**
+    * Constructor for a GameObject
+    * @param x x position of the GameObject, amount of pixels to the right (for drawing)
+    * @param y y position of the GameObject, amount of pixels downwards (for drawing)
+    * @param i_pos the row within the map array where GameObject is located
+    * @param j_pos the column within the map array  where GameObject is located
+    * @param sprites the sprite array, with each row corresponding to a sprite array for different movement directions 
+    * @param map the map object that the GameObject is placed within
+    */
+
     public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {
         this.x = x;
         this.y = y;
@@ -37,10 +47,18 @@ public abstract class GameObject {
         this.sprite_timer = 12;
         this.map = map;
     }
+    /**To be executed once per frame */
     public abstract void tick();
+    /**Resets the position and sprite cycle of the GameObject */
     public abstract void reset();
+    /**
+    * Condition upon colliding with wall 
+    * @param d Cardinal direction in which GameObject is colliding in
+    * @param map Map object which the GameObject is situated in
+    */
     public abstract void collisionCondition(Direction d, Map map);
 
+    /**To be executed once per frame, cycles the GameObject's current_sprite being rendered to the next sprite in the array */
     public void sprite_cycle() {
         current_sprite = sprites[s_dir][s_cycle];
         if(sprite_timer < 0) {
@@ -54,11 +72,15 @@ public abstract class GameObject {
         else 
             sprite_timer--;
     }
-
+    /**To be executed once per frame, draws the GameObject using its current_sprite 
+    * @param app PApplet object */
     public void draw(PApplet app) {
         app.image(current_sprite, x, y);
     }
-
+    /**
+    * Moves the GameObject in a cardinal direction, a distance of one grid space and updates its position in the map array (changing i_pos and j_pos)
+    * @param d direction of movement.
+    */
     public void move(Direction d) {
         if(checkCollision(d, map)) {
             collisionCondition(d, map);
@@ -85,7 +107,12 @@ public abstract class GameObject {
             i_pos++;
         }
     }
-
+    /**
+    * Checks whether a collision will occur if moved in the specified direction
+    * @param d Direction of movement
+    * @param map Map object that GameObject is moving in
+    * @return true if a collision will occur, false if no collision will occur
+     */
     public boolean checkCollision(Direction d, Map map) {
         Tile[][] tiles = map.getMap();
         TileType left_tile = tiles[i_pos][j_pos-1].getType();
@@ -104,31 +131,39 @@ public abstract class GameObject {
         else 
             return true; 
     }
-
+    /**@return x position of the GameObject */
     public int getX() {
         return x;
     }
+    /**@return y position of the GameObject */
     public int getY() {
         return y;
     }
+    /**@return the row within the map array that the GameObject is situated on */
     public int getI() {
         return i_pos;
     }
+    /**@return the column within the map array that the GameObject is situated on */
     public int getJ() {
         return j_pos;
     }
+    /**@return original x position of the GameObject */
     public int getOriginalX() {
         return x_original;
     }
+    /**@return original y position of the GameObject */
     public int getOriginalY() {
         return y_original;
     }
+    /**@return the original row within the map array that the GameObject is situated on */
     public int getOriginalI() {
         return i_pos_original;
     }
+    /**@return the original column within the map array that the GameObject is situated on */
     public int getOriginalJ() {
         return j_pos_original;
     }
+    /**moves GameObject back to original position */
     public void resetPos() {
         x = x_original;
         y = y_original;

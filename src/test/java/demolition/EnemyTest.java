@@ -19,7 +19,7 @@ public class EnemyTest {
     private PImage[][] BombGuy_s = new PImage[4][4];
     private PImage[][] Red_s = new PImage[4][4];
     private PImage[][] Yellow_s = new PImage[4][4];
-    private JSONObject config = PApplet.loadJSONObject(new File("config.json"));
+    private JSONObject config = PApplet.loadJSONObject(new File("src/test/resources/config.json"));
     private JSONArray levels = config.getJSONArray("levels");
     private String path = levels.getJSONObject(0).getString("path");
     private int lives = 3;
@@ -28,8 +28,8 @@ public class EnemyTest {
     @Test
     public void testEnemyLoad() {
         Map map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-        map.constructMap("level1.txt");
-        map.loadObjects("level1.txt", 3, 180);
+        map.constructMap("src/test/resources/level1.txt");
+        map.loadObjects("src/test/resources/level1.txt", 3, 180);
         assertNotNull(map.getEnemies());
         assertNotNull(map.getEnemies().get(0));
 
@@ -38,10 +38,16 @@ public class EnemyTest {
     @Test 
     public void testEnemyConstructor1() {
         Map map = new Map(path, lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
-        map.constructMap("level1.txt");
+        map.constructMap("src/test/resources/level1.txt");
         Red enemy = new Red(0, 0, 0, 0, Red_s, map);
         assertNotNull(enemy);
         enemy.tick();
+    }
+
+    @Test
+    public void yellowEnemyTest() {
+        //Testing if yellow enemy will respond correctly to environment
+        
     }
 
 }

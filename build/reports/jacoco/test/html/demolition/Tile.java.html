@@ -14,50 +14,81 @@ public abstract class Tile {
     protected int x;
     protected int y;
 
-<span class="fc" id="L17">    public Tile(PImage sprite, TileType type, int x, int y) {</span>
-<span class="fc" id="L18">        this.sprite = sprite;</span>
-<span class="fc" id="L19">        this.type = type;</span>
-<span class="fc" id="L20">        this.x = x;</span>
-<span class="fc" id="L21">        this.y = y;</span>
-<span class="fc" id="L22">    }</span>
+    /** Constructor for a tile 
+    * @param sprite the sprite of the tile
+    * @param type the tile type either solid, empty, broken or goal
+    * @param x the x location of the tile (for drawing)
+    * @param y the y location of the tile (for drawing)
+    */
+
+<span class="fc" id="L24">    public Tile(PImage sprite, TileType type, int x, int y) {</span>
+<span class="fc" id="L25">        this.sprite = sprite;</span>
+<span class="fc" id="L26">        this.type = type;</span>
+<span class="fc" id="L27">        this.x = x;</span>
+<span class="fc" id="L28">        this.y = y;</span>
+<span class="fc" id="L29">    }</span>
+
+    /**@param app the applet that draws the tile */
 
     public void draw(PApplet app) {
-<span class="nc" id="L25">        app.image(sprite, x, y);</span>
-<span class="nc" id="L26">    }</span>
-
+<span class="fc" id="L34">        app.image(sprite, x, y);</span>
+<span class="fc" id="L35">    }</span>
+    /**@return x position of tile in pixels */
     public int getX() {
-<span class="fc" id="L29">        return x;</span>
+<span class="fc" id="L38">        return x;</span>
     }
+    /**@return y position of the tile in pixels */
     public int getY() {
-<span class="fc" id="L32">        return y;</span>
+<span class="fc" id="L42">        return y;</span>
     }
+    /**@return the the type of tile */
     public TileType getType() {
-<span class="fc" id="L35">        return type;</span>
+<span class="fc" id="L46">        return type;</span>
     }
 
 }
 
 class SolidWall extends Tile {
+    /** Constructor for a tile, tile type is automatically set as TileType.SOLID
+    * @param sprite the sprite of the tile
+    * @param x the x location of the tile (for drawing)
+    * @param y the y location of the tile (for drawing)
+    */
     public SolidWall(PImage sprite, int x, int y) {
-<span class="fc" id="L42">        super(sprite, TileType.SOLID, x, y);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L58">        super(sprite, TileType.SOLID, x, y);</span>
+<span class="fc" id="L59">    }</span>
 }
 
 class BrokenWall extends Tile {
+    /** Constructor for a tile, tile type is automatically set as TileType.BROKEN
+    * @param sprite the sprite of the tile
+    * @param x the x location of the tile (for drawing)
+    * @param y the y location of the tile (for drawing)
+    */
     public BrokenWall(PImage sprite, int x, int y) {
-<span class="fc" id="L48">        super(sprite, TileType.BROKEN, x, y);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L69">        super(sprite, TileType.BROKEN, x, y);</span>
+<span class="fc" id="L70">    }</span>
 }
 
 class EmptyTile extends Tile {
+    /** Constructor for a tile, tile type is automatically set as TileType.EMPTY
+    * @param sprite the sprite of the tile
+    * @param x the x location of the tile (for drawing)
+    * @param y the y location of the tile (for drawing)
+    */
     public EmptyTile(PImage sprite, int x, int y) {
-<span class="fc" id="L54">        super(sprite, TileType.EMPTY, x, y);</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L80">        super(sprite, TileType.EMPTY, x, y);</span>
+<span class="fc" id="L81">    }</span>
 }
 
 class GoalTile extends Tile {
+    /** Constructor for a tile, tile type is automatically set as TileType.GOAL
+    * @param sprite the sprite of the tile
+    * @param x the x location of the tile (for drawing)
+    * @param y the y location of the tile (for drawing)
+    */
     public GoalTile(PImage sprite, int x, int y) {
-<span class="fc" id="L60">        super(sprite, TileType.GOAL, x, y);</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L91">        super(sprite, TileType.GOAL, x, y);</span>
+<span class="fc" id="L92">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

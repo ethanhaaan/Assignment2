@@ -18,7 +18,7 @@ public class BombTest {
     private PImage[][] BombGuy_s = new PImage[4][4];
     private PImage[][] Red_s = new PImage[4][4];
     private PImage[][] Yellow_s = new PImage[4][4];
-    private JSONObject config = PApplet.loadJSONObject(new File("config.json"));
+    private JSONObject config = PApplet.loadJSONObject(new File("src/test/resources/config.json"));
     private JSONArray levels = config.getJSONArray("levels");
     private String path = levels.getJSONObject(0).getString("path");
     private int lives = 3;
@@ -34,7 +34,7 @@ public class BombTest {
     //Testing manually exploding using explode()
     public void explodeBombTest1() {
         MapTest.createManualFile2();
-        Map map = new Map("testcasemanuallvlBOMBTEST.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvlBOMBTEST.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         Bomb bomb = new Bomb(0, 0, 5, 7, Bomb_s, map);
         //Tiles before explosion
         assertEquals(map.getMap()[5][6].getType(), TileType.BROKEN);
@@ -52,7 +52,7 @@ public class BombTest {
     //Testing manually exploding using explode()
     public void explodeBombTest2() {
         MapTest.createManualFile1();
-        Map map = new Map("testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         Bomb bomb = new Bomb(0, 0, 3, 8, Bomb_s, map);
         //Tiles before explosion
         assertEquals(map.getMap()[3][7].getType(), TileType.EMPTY);
@@ -72,7 +72,7 @@ public class BombTest {
     //Testing manually exploding using explode()
     public void explodeBombTest3() {
         MapTest.createManualFile1();
-        Map map = new Map("testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         Bomb bomb = new Bomb(0, 0, 6, 9, Bomb_s, map);
         //Tiles before explosion
         assertEquals(map.getMap()[6][8].getType(), TileType.SOLID);
@@ -90,7 +90,7 @@ public class BombTest {
     //Testing manually exploding using explode()
     public void explodeBombTest4() {
         MapTest.createManualFile3();
-        Map map = new Map("testcasemanuallvlBOMBALLGOALS.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvlBOMBALLGOALS.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         Bomb bomb = new Bomb(0, 0, 5, 7, Bomb_s, map);
         //Tiles before explosion
         assertEquals(map.getMap()[5][6].getType(), TileType.GOAL);
@@ -131,10 +131,30 @@ public class BombTest {
 
     }
     @Test
+    //Bomb explodes into goal tiles (checking functionality of goal tiles)
+    public void tickBombTest2() {
+        MapTest.createManualFile2();
+        Map map = new Map("src/test/resources/testcasemanuallvlALLGOALSNOPLAYER.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Bomb bomb = new Bomb(0, 0, 3, 3, Bomb_s, map);
+        //After 121 ticks (2 seconds + 1 frame)
+        for(int i = 0; i < 121; i++) {
+            bomb.tick();
+        }
+        //All goal tiles surrounding it should still be goal tiles
+        assertEquals(map.getMap()[3][2].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[3][1].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[3][4].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[3][5].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[2][3].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[1][3].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[4][3].getType(), TileType.GOAL);
+        assertEquals(map.getMap()[5][3].getType(), TileType.GOAL);
+    }
+    @Test
     //Player places the bomb
     public void naturalPlayBombTest1() {
         MapTest.createManualFile1();
-        Map map = new Map("testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         map.addBomb();
         map.getPlayer().move(Direction.RIGHT);
         map.getPlayer().move(Direction.RIGHT);
@@ -158,7 +178,7 @@ public class BombTest {
     //Testing caught in explosion
     public void testKill1() {
         MapTest.createManualFile4();
-        Map map = new Map("testcasemanuallvlENEMIES.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvlENEMIES.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         List<Enemy> original_enemies = new ArrayList<Enemy>(map.getEnemies());
         //Player quickly rushes in and places bombs
         for(int i = 0; i < 3; i++) {
@@ -189,7 +209,7 @@ public class BombTest {
     //Testing caught in explosion
     public void testKill2() {
         MapTest.createManualFile1();
-        Map map = new Map("testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        Map map = new Map("src/test/resources/testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
         //Player places a bomb at its own location
         map.addBomb();
         //Allowing bomb to tick 3 seconds and explode
@@ -199,4 +219,24 @@ public class BombTest {
         assertEquals(map.getPlayer().getLives(), 2);
     }
 
+    @Test
+    //Testing if explosion has finished, if player will still die if walks into where explosion previously was
+    public void testKill3() {
+        MapTest.createManualFile1();
+        Map map = new Map("src/test/resources/testcasemanuallvl101.txt", lives, time, Wall_s, UI_s, Bomb_s, BombGuy_s, Red_s, Yellow_s);
+        //Player places a bomb at its own location
+        map.addBomb();
+        for(int i = 0; i < 5; i++) {
+            map.getPlayer().move(Direction.RIGHT);
+        }
+        //Allowing bomb to tick 5 seconds and explode, then finish
+        for(int i = 0; i < 300; i++) {
+            map.tick();
+        }
+        for(int i = 0; i < 5; i++) {
+            map.getPlayer().move(Direction.LEFT);
+        }
+        //Player must not have lost any lives
+        assertEquals(map.getPlayer().getLives(), 3);
+    }
 }

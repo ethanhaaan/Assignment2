@@ -7,43 +7,57 @@ import processing.data.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+/** the UI object has the purpose of drawing the UI elements of the game, such as the timer, lives remaining, win and lose conditions */
+
 public class UI {
 
     private PImage playerhead;
     private PImage clock;
     private int fps_timer;
 
-<span class="nc" id="L16">    public UI(PImage[] UI_s) {</span>
-<span class="nc" id="L17">        this.playerhead = UI_s[0];</span>
-<span class="nc" id="L18">        this.clock = UI_s[1];</span>
-<span class="nc" id="L19">        this.fps_timer = 60;</span>
-<span class="nc" id="L20">    }</span>
+    /**Constructor for UI object 
+    * @param UI_s Sprite array of the playerhead sprite and clock sprite
+    */
 
+<span class="fc" id="L22">    public UI(PImage[] UI_s) {</span>
+<span class="fc" id="L23">        this.playerhead = UI_s[0];</span>
+<span class="fc" id="L24">        this.clock = UI_s[1];</span>
+<span class="fc" id="L25">        this.fps_timer = 60;</span>
+<span class="fc" id="L26">    }</span>
+    /**Draws the timer, lives remaining and area above the map.
+    * @param app applet in which to draw the UI
+    * @param lives number of lives remaining of the player
+    * @param time number of seconds left of the map
+    */
     public void draw(PApplet app, int lives, int time) {
-<span class="nc" id="L23">        app.fill(239, 129, 0);</span>
-<span class="nc" id="L24">        app.stroke(239, 129, 0);</span>
-<span class="nc" id="L25">        app.rect(0, 0, 480, 64);</span>
-<span class="nc" id="L26">        app.image(playerhead, 128,18);</span>
-<span class="nc" id="L27">        app.image(clock, 256, 18);</span>
-<span class="nc" id="L28">        app.fill(0, 0, 0);</span>
-<span class="nc" id="L29">        app.text(lives, 168, 45);</span>
-<span class="nc" id="L30">        app.text(time, 300, 45);</span>
-<span class="nc" id="L31">    }</span>
-
+<span class="fc" id="L33">        app.fill(239, 129, 0);</span>
+<span class="fc" id="L34">        app.stroke(239, 129, 0);</span>
+<span class="fc" id="L35">        app.rect(0, 0, 480, 64);</span>
+<span class="fc" id="L36">        app.image(playerhead, 128,18);</span>
+<span class="fc" id="L37">        app.image(clock, 256, 18);</span>
+<span class="fc" id="L38">        app.fill(0, 0, 0);</span>
+<span class="fc" id="L39">        app.text(lives, 168, 45);</span>
+<span class="fc" id="L40">        app.text(time, 300, 45);</span>
+<span class="fc" id="L41">    }</span>
+    /**Draws the win screen, displaying an orange background with &quot;YOU WIN&quot; text 
+    *@param app applet in which to draw the win screen
+    */
     public void drawWin(PApplet app) {
-<span class="nc" id="L34">        app.fill(239, 129, 0);</span>
-<span class="nc" id="L35">        app.stroke(239, 129, 0);</span>
-<span class="nc" id="L36">        app.rect(-1, -1, 482, 482);</span>
-<span class="nc" id="L37">        app.fill(0, 0, 0);</span>
-<span class="nc" id="L38">        app.text(&quot;YOU WIN&quot;, 168, 230);</span>
-<span class="nc" id="L39">    }</span>
-
+<span class="fc" id="L46">        app.fill(239, 129, 0);</span>
+<span class="fc" id="L47">        app.stroke(239, 129, 0);</span>
+<span class="fc" id="L48">        app.rect(-1, -1, 482, 482);</span>
+<span class="fc" id="L49">        app.fill(0, 0, 0);</span>
+<span class="fc" id="L50">        app.text(&quot;YOU WIN&quot;, 168, 230);</span>
+<span class="fc" id="L51">    }</span>
+    /**Draws the losing screen, displaying an orange background with &quot;GAME OVER&quot; text 
+    *@param app applet in which to draw the lose screen
+    */
     public void drawLose(PApplet app) {
-<span class="nc" id="L42">        app.fill(239, 129, 0);</span>
-<span class="nc" id="L43">        app.stroke(239, 129, 0);</span>
-<span class="nc" id="L44">        app.rect(-1, -1, 482, 482);</span>
-<span class="nc" id="L45">        app.fill(0, 0, 0);</span>
-<span class="nc" id="L46">        app.text(&quot;GAME OVER&quot;, 148, 230);</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L56">        app.fill(239, 129, 0);</span>
+<span class="fc" id="L57">        app.stroke(239, 129, 0);</span>
+<span class="fc" id="L58">        app.rect(-1, -1, 482, 482);</span>
+<span class="fc" id="L59">        app.fill(0, 0, 0);</span>
+<span class="fc" id="L60">        app.text(&quot;GAME OVER&quot;, 148, 230);</span>
+<span class="fc" id="L61">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

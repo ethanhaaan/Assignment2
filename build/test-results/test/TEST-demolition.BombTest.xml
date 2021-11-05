@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="demolition.BombTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2021-11-03T08:43:47" hostname="kali" time="0.034">
+<testsuite name="demolition.BombTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2021-11-05T01:25:21" hostname="kali" time="0.039">
   <properties/>
-  <testcase name="testKill1()" classname="demolition.BombTest" time="0.006"/>
+  <testcase name="testKill1()" classname="demolition.BombTest" time="0.012"/>
   <testcase name="testKill2()" classname="demolition.BombTest" time="0.003"/>
-  <testcase name="constructBombTest()" classname="demolition.BombTest" time="0.002"/>
-  <testcase name="explodeBombTest1()" classname="demolition.BombTest" time="0.005"/>
-  <testcase name="explodeBombTest2()" classname="demolition.BombTest" time="0.003"/>
+  <testcase name="testKill3()" classname="demolition.BombTest" time="0.002"/>
+  <testcase name="constructBombTest()" classname="demolition.BombTest" time="0.001"/>
+  <testcase name="explodeBombTest1()" classname="demolition.BombTest" time="0.003"/>
+  <testcase name="explodeBombTest2()" classname="demolition.BombTest" time="0.002"/>
   <testcase name="explodeBombTest3()" classname="demolition.BombTest" time="0.001"/>
-  <testcase name="explodeBombTest4()" classname="demolition.BombTest" time="0.001"/>
-  <testcase name="naturalPlayBombTest1()" classname="demolition.BombTest" time="0.003"/>
+  <testcase name="explodeBombTest4()" classname="demolition.BombTest" time="0.002"/>
+  <testcase name="naturalPlayBombTest1()" classname="demolition.BombTest" time="0.002"/>
   <testcase name="tickBombTest1()" classname="demolition.BombTest" time="0.002"/>
+  <testcase name="tickBombTest2()" classname="demolition.BombTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

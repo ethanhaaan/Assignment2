@@ -22,4 +22,10 @@ public class TileTest {
         assertEquals(empty.getType(), TileType.EMPTY);
     }
 
+    @Test
+    public void test3() {
+        Tile empty = new BrokenWall(null, 10, 10);
+        assertEquals(empty.getType(), TileType.BROKEN);
+    }
+
 }

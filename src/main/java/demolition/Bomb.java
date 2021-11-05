@@ -7,22 +7,46 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Bomb {
-    
+    /**x value of the bomb in terms of pixels */
     private int x;
+    /**y value of the bomb in terms of pixels */
     private int y;
+    /**the row within the map array */ 
     private int i_pos;
+    /**the column within the map array */ 
     private int j_pos;
+    /**sprites of the bomb,
+    *with first row displaying bomb sprites and second row displaying explosion sprites */ 
     private PImage[][] sprites;
+    /**the current sprite that is displayed upon draw() */
     private PImage current_sprite;
+    /**countdown timer until the bomb explodes */
     private int countdown_timer;
+    /**timer to time explosion duration*/
     private int explosion_timer;
+    /**times how many frames each sprite lasts for before moving to next sprite*/
     private int sprite_timer;
+    /**the group of sprites iterator.
+    * when s_i = 0, sprites displayed are bomb sprites
+    * when s_i = 1, sprites displayed are explosion sprites
+    */
     private int s_i;
+    /**The sprite iterator */
     private int s_cycle;
     private boolean exploding;
     private boolean exploded;
     private Map map;
     private List<Explosion> explosion;
+
+    /**
+    * Constructor for bomb object
+    * @param x x position of the bomb, amount of pixels to the right (for drawing)
+    * @param y y position of the bomb, amount of pixels downwards (for drawing)
+    * @param i_pos the row within the map array where bomb is located
+    * @param j_pos the column within the map array  where bomb is located
+    * @param sprites the sprite array with first row an array of bomb sprites and second row an array of explosion sprites to be cycled
+    * @param map the map object that the bomb is placed within
+    */
 
     public Bomb(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {
         this.x = x;
@@ -40,6 +64,12 @@ public class Bomb {
         this.explosion = new ArrayList<Explosion>();
         this.map = map;
     }
+
+    /**
+    * To be executed once every frame,
+    * decrements timers, calls {@link #sprite_cycle()} per execution and calls {@link #explode()} once exploded.
+    * @return true if explosion made contact with player
+    */
 
     public boolean tick() {
         boolean player_contact = false;
@@ -62,6 +92,12 @@ public class Bomb {
         return player_contact;
     }
 
+    /**
+    * To be executed once every frame,
+    * draws the bomb
+    * @param app of PApplet 
+     */
+
     public void draw(PApplet app) {
         //Explosion finished
         if(exploded) {
@@ -72,13 +108,18 @@ public class Bomb {
             app.image(current_sprite, x, y);
         }
         //In process of exploding
-        else if(exploding) {
+        else {
             for(Explosion e : explosion) {
                 app.image(e.getSprite(), e.getX(), e.getY());
             }
         }
             
     }
+
+    /**
+    * To be executed once every frame by {@link #tick()},
+    * cycles the sprite by moving to the next PImage in the PImage[] array
+     */
 
     public void sprite_cycle() {
         if(exploding)
@@ -90,6 +131,10 @@ public class Bomb {
         }
         sprite_timer--;
     }
+
+    /**
+    * Creates explosion objects for every grid tile that the explosion extends to, and checks whether explosion can continue
+     */
 
     public void explode() {
         exploding = true;
@@ -198,6 +243,13 @@ public class Bomb {
 
     }
 
+    /**
+    * Checks explosion for any contact between the player or enemies.
+    * If explosion makes contact with enemies, enemies are moved from the map's enemies array and transferred to enemies_dead, no longer rendered.
+    * If explosion makes contact with player, {@link BombGuy#kill()} is called.
+    * @return true if explosion makes contact with player.
+    */
+
     public boolean checkContact() {
         List<Enemy> for_removal = new ArrayList<Enemy>();
         for(Explosion e : explosion) {
@@ -226,6 +278,15 @@ class Explosion {
     private int j_pos;
     private PImage sprite;
 
+    /**
+    * Constructor for an explosion 
+    * @param x x position of the explosion (for drawing)
+    * @param y y position of the explosion (for drawing)
+    * @param i_pos the row within the map array where the explosion is located
+    * @param j_pos the column within the map array where the explosion is located
+    * @param sprite sprite which explosion is drawn with
+    */
+
     public Explosion(int x, int y, int i_pos, int j_pos, PImage sprite) {
         this.x = x;
         this.y = y;
@@ -234,22 +295,23 @@ class Explosion {
         this.sprite = sprite;
     }
 
+    /** @return PImage sprite object */
     public PImage getSprite() {
         return sprite;
     }
-
+    /** @return x position of the explosion */
     public int getX() {
         return x;
     }
-
+    /** @return y position of the explosion */
     public int getY() {
         return y;
     }
-
+    /** @return the row within the map array */
     public int getI() {
         return i_pos;
     }
-
+    /** @return the column within the map array */
     public int getJ() {
         return j_pos;
     }

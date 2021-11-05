@@ -5,19 +5,34 @@ import processing.core.PImage;
 
 public class Red extends Enemy {
 
+    /**
+    * Constructor for Red Enemy
+    * @param x x position of the Red Enemy, amount of pixels to the right (for drawing)
+    * @param y y position of the Red Enemy, amount of pixels downwards (for drawing)
+    * @param i_pos the row within the map array where Red Enemy is located
+    * @param j_pos the column within the map array  where Red Enemy is located
+    * @param sprites the sprite array, with each row corresponding to a sprite array for different movement directions 
+    * @param map the map object that the Red Enemy is placed within
+    */
+
     public Red(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {
-<span class="fc" id="L9">        super(x, y, i_pos, j_pos, sprites, map);</span>
-<span class="fc" id="L10">    }</span>
+<span class="fc" id="L19">        super(x, y, i_pos, j_pos, sprites, map);</span>
+<span class="fc" id="L20">    }</span>
+
+    /**The recursive method that is executed upon collision with a wall.
+    * The enumeration method {@link Direction#getRandomDirection()} is called to change the Red enemy's direction to a random direction, until
+    {@link GameObject#checkCollision(Direction d, Map map)} is no longer true and there is no longer a collision.
+     */
 
     public void collisionCondition(Direction d, Map map) {
-<span class="fc bfc" id="L13" title="All 2 branches covered.">        if(checkCollision(d, map)) {</span>
-<span class="fc" id="L14">            current_dir = Direction.getRandomDirection();</span>
-<span class="fc" id="L15">            collisionCondition(current_dir, map);</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if(checkCollision(d, map)) {</span>
+<span class="fc" id="L29">            current_dir = Direction.getRandomDirection();</span>
+<span class="fc" id="L30">            collisionCondition(current_dir, map);</span>
         }
         else {
-<span class="fc" id="L18">            move(d);</span>
+<span class="fc" id="L33">            move(d);</span>
         }
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L35">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

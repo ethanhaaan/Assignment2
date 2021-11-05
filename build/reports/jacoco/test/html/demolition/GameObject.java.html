@@ -24,123 +24,158 @@ public abstract class GameObject {
     protected int s_cycle;
     protected Map map;
 
-<span class="fc" id="L27">    public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {</span>
-<span class="fc" id="L28">        this.x = x;</span>
-<span class="fc" id="L29">        this.y = y;</span>
-<span class="fc" id="L30">        this.i_pos = i_pos;</span>
-<span class="fc" id="L31">        this.j_pos = j_pos;</span>
-<span class="fc" id="L32">        this.x_original = x;</span>
-<span class="fc" id="L33">        this.y_original = y;</span>
-<span class="fc" id="L34">        this.i_pos_original = i_pos;</span>
-<span class="fc" id="L35">        this.j_pos_original = j_pos;</span>
-<span class="fc" id="L36">        this.sprites = sprites;</span>
-<span class="fc" id="L37">        this.sprite_timer = 12;</span>
-<span class="fc" id="L38">        this.map = map;</span>
-<span class="fc" id="L39">    }</span>
+    /**
+    * Constructor for a GameObject
+    * @param x x position of the GameObject, amount of pixels to the right (for drawing)
+    * @param y y position of the GameObject, amount of pixels downwards (for drawing)
+    * @param i_pos the row within the map array where GameObject is located
+    * @param j_pos the column within the map array  where GameObject is located
+    * @param sprites the sprite array, with each row corresponding to a sprite array for different movement directions 
+    * @param map the map object that the GameObject is placed within
+    */
+
+<span class="fc" id="L37">    public GameObject(int x, int y, int i_pos, int j_pos, PImage[][] sprites, Map map) {</span>
+<span class="fc" id="L38">        this.x = x;</span>
+<span class="fc" id="L39">        this.y = y;</span>
+<span class="fc" id="L40">        this.i_pos = i_pos;</span>
+<span class="fc" id="L41">        this.j_pos = j_pos;</span>
+<span class="fc" id="L42">        this.x_original = x;</span>
+<span class="fc" id="L43">        this.y_original = y;</span>
+<span class="fc" id="L44">        this.i_pos_original = i_pos;</span>
+<span class="fc" id="L45">        this.j_pos_original = j_pos;</span>
+<span class="fc" id="L46">        this.sprites = sprites;</span>
+<span class="fc" id="L47">        this.sprite_timer = 12;</span>
+<span class="fc" id="L48">        this.map = map;</span>
+<span class="fc" id="L49">    }</span>
+    /**To be executed once per frame */
     public abstract void tick();
+    /**Resets the position and sprite cycle of the GameObject */
     public abstract void reset();
+    /**
+    * Condition upon colliding with wall 
+    * @param d Cardinal direction in which GameObject is colliding in
+    * @param map Map object which the GameObject is situated in
+    */
     public abstract void collisionCondition(Direction d, Map map);
 
+    /**To be executed once per frame, cycles the GameObject's current_sprite being rendered to the next sprite in the array */
     public void sprite_cycle() {
-<span class="fc" id="L45">        current_sprite = sprites[s_dir][s_cycle];</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(sprite_timer &lt; 0) {</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">            if(s_cycle == 3) {</span>
-<span class="fc" id="L48">                s_cycle = 0;</span>
+<span class="fc" id="L63">        current_sprite = sprites[s_dir][s_cycle];</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if(sprite_timer &lt; 0) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            if(s_cycle == 3) {</span>
+<span class="fc" id="L66">                s_cycle = 0;</span>
             }
             else
-<span class="fc" id="L51">                s_cycle++;</span>
-<span class="fc" id="L52">        sprite_timer = 12;</span>
+<span class="fc" id="L69">                s_cycle++;</span>
+<span class="fc" id="L70">        sprite_timer = 12;</span>
         }
         else 
-<span class="fc" id="L55">            sprite_timer--;</span>
-<span class="fc" id="L56">    }</span>
-
+<span class="fc" id="L73">            sprite_timer--;</span>
+<span class="fc" id="L74">    }</span>
+    /**To be executed once per frame, draws the GameObject using its current_sprite 
+    * @param app PApplet object */
     public void draw(PApplet app) {
-<span class="nc" id="L59">        app.image(current_sprite, x, y);</span>
-<span class="nc" id="L60">    }</span>
-
+<span class="fc" id="L78">        app.image(current_sprite, x, y);</span>
+<span class="fc" id="L79">    }</span>
+    /**
+    * Moves the GameObject in a cardinal direction, a distance of one grid space and updates its position in the map array (changing i_pos and j_pos)
+    * @param d direction of movement.
+    */
     public void move(Direction d) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if(checkCollision(d, map)) {</span>
-<span class="fc" id="L64">            collisionCondition(d, map);</span>
-<span class="fc" id="L65">            return;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if(checkCollision(d, map)) {</span>
+<span class="fc" id="L86">            collisionCondition(d, map);</span>
+<span class="fc" id="L87">            return;</span>
         }
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(d == Direction.LEFT) {</span>
-<span class="fc" id="L68">            x -= 32;</span>
-<span class="fc" id="L69">            s_dir = 0; </span>
-<span class="fc" id="L70">            j_pos--;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if(d == Direction.LEFT) {</span>
+<span class="fc" id="L90">            x -= 32;</span>
+<span class="fc" id="L91">            s_dir = 0; </span>
+<span class="fc" id="L92">            j_pos--;</span>
         }
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        else if(d == Direction.RIGHT) {</span>
-<span class="fc" id="L73">            x += 32;</span>
-<span class="fc" id="L74">            s_dir = 1;</span>
-<span class="fc" id="L75">            j_pos++;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        else if(d == Direction.RIGHT) {</span>
+<span class="fc" id="L95">            x += 32;</span>
+<span class="fc" id="L96">            s_dir = 1;</span>
+<span class="fc" id="L97">            j_pos++;</span>
         }
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        else if(d == Direction.UP) {</span>
-<span class="fc" id="L78">            y -= 32;</span>
-<span class="fc" id="L79">            s_dir = 2;</span>
-<span class="fc" id="L80">            i_pos--;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        else if(d == Direction.UP) {</span>
+<span class="fc" id="L100">            y -= 32;</span>
+<span class="fc" id="L101">            s_dir = 2;</span>
+<span class="fc" id="L102">            i_pos--;</span>
         }
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        else if(d == Direction.DOWN) {</span>
-<span class="fc" id="L83">            y += 32;</span>
-<span class="fc" id="L84">            s_dir = 3;</span>
-<span class="fc" id="L85">            i_pos++;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        else if(d == Direction.DOWN) {</span>
+<span class="fc" id="L105">            y += 32;</span>
+<span class="fc" id="L106">            s_dir = 3;</span>
+<span class="fc" id="L107">            i_pos++;</span>
         }
-<span class="fc" id="L87">    }</span>
-
+<span class="fc" id="L109">    }</span>
+    /**
+    * Checks whether a collision will occur if moved in the specified direction
+    * @param d Direction of movement
+    * @param map Map object that GameObject is moving in
+    * @return true if a collision will occur, false if no collision will occur
+     */
     public boolean checkCollision(Direction d, Map map) {
-<span class="fc" id="L90">        Tile[][] tiles = map.getMap();</span>
-<span class="fc" id="L91">        TileType left_tile = tiles[i_pos][j_pos-1].getType();</span>
-<span class="fc" id="L92">        TileType right_tile = tiles[i_pos][j_pos+1].getType();</span>
-<span class="fc" id="L93">        TileType up_tile = tiles[i_pos-1][j_pos].getType();</span>
-<span class="fc" id="L94">        TileType down_tile = tiles[i_pos+1][j_pos].getType();</span>
+<span class="fc" id="L117">        Tile[][] tiles = map.getMap();</span>
+<span class="fc" id="L118">        TileType left_tile = tiles[i_pos][j_pos-1].getType();</span>
+<span class="fc" id="L119">        TileType right_tile = tiles[i_pos][j_pos+1].getType();</span>
+<span class="fc" id="L120">        TileType up_tile = tiles[i_pos-1][j_pos].getType();</span>
+<span class="fc" id="L121">        TileType down_tile = tiles[i_pos+1][j_pos].getType();</span>
 
-<span class="pc bpc" id="L96" title="1 of 6 branches missed.">        if(d == Direction.LEFT &amp;&amp; (left_tile == TileType.EMPTY || left_tile == TileType.GOAL))</span>
-<span class="fc" id="L97">            return false; </span>
-<span class="pc bpc" id="L98" title="1 of 6 branches missed.">        else if(d == Direction.RIGHT &amp;&amp; (right_tile == TileType.EMPTY || right_tile == TileType.GOAL))</span>
-<span class="fc" id="L99">            return false; </span>
-<span class="pc bpc" id="L100" title="1 of 6 branches missed.">        else if(d == Direction.UP &amp;&amp; (up_tile == TileType.EMPTY || up_tile == TileType.GOAL))</span>
-<span class="fc" id="L101">            return false; </span>
-<span class="pc bpc" id="L102" title="1 of 6 branches missed.">        else if(d == Direction.DOWN &amp;&amp; (down_tile == TileType.EMPTY || down_tile == TileType.GOAL))</span>
-<span class="fc" id="L103">            return false;</span>
+<span class="fc bfc" id="L123" title="All 6 branches covered.">        if(d == Direction.LEFT &amp;&amp; (left_tile == TileType.EMPTY || left_tile == TileType.GOAL))</span>
+<span class="fc" id="L124">            return false; </span>
+<span class="fc bfc" id="L125" title="All 6 branches covered.">        else if(d == Direction.RIGHT &amp;&amp; (right_tile == TileType.EMPTY || right_tile == TileType.GOAL))</span>
+<span class="fc" id="L126">            return false; </span>
+<span class="fc bfc" id="L127" title="All 6 branches covered.">        else if(d == Direction.UP &amp;&amp; (up_tile == TileType.EMPTY || up_tile == TileType.GOAL))</span>
+<span class="fc" id="L128">            return false; </span>
+<span class="fc bfc" id="L129" title="All 6 branches covered.">        else if(d == Direction.DOWN &amp;&amp; (down_tile == TileType.EMPTY || down_tile == TileType.GOAL))</span>
+<span class="fc" id="L130">            return false;</span>
         else 
-<span class="fc" id="L105">            return true; </span>
+<span class="fc" id="L132">            return true; </span>
     }
-
+    /**@return x position of the GameObject */
     public int getX() {
-<span class="fc" id="L109">        return x;</span>
+<span class="fc" id="L136">        return x;</span>
     }
+    /**@return y position of the GameObject */
     public int getY() {
-<span class="fc" id="L112">        return y;</span>
+<span class="fc" id="L140">        return y;</span>
     }
+    /**@return the row within the map array that the GameObject is situated on */
     public int getI() {
-<span class="fc" id="L115">        return i_pos;</span>
+<span class="fc" id="L144">        return i_pos;</span>
     }
+    /**@return the column within the map array that the GameObject is situated on */
     public int getJ() {
-<span class="fc" id="L118">        return j_pos;</span>
+<span class="fc" id="L148">        return j_pos;</span>
     }
+    /**@return original x position of the GameObject */
     public int getOriginalX() {
-<span class="fc" id="L121">        return x_original;</span>
+<span class="fc" id="L152">        return x_original;</span>
     }
+    /**@return original y position of the GameObject */
     public int getOriginalY() {
-<span class="fc" id="L124">        return y_original;</span>
+<span class="fc" id="L156">        return y_original;</span>
     }
+    /**@return the original row within the map array that the GameObject is situated on */
     public int getOriginalI() {
-<span class="fc" id="L127">        return i_pos_original;</span>
+<span class="fc" id="L160">        return i_pos_original;</span>
     }
+    /**@return the original column within the map array that the GameObject is situated on */
     public int getOriginalJ() {
-<span class="fc" id="L130">        return j_pos_original;</span>
+<span class="fc" id="L164">        return j_pos_original;</span>
     }
+    /**moves GameObject back to original position */
     public void resetPos() {
-<span class="fc" id="L133">        x = x_original;</span>
-<span class="fc" id="L134">        y = y_original;</span>
-<span class="fc" id="L135">        i_pos = i_pos_original;</span>
-<span class="fc" id="L136">        j_pos = j_pos_original;</span>
-<span class="fc" id="L137">    }</span>
+<span class="fc" id="L168">        x = x_original;</span>
+<span class="fc" id="L169">        y = y_original;</span>
+<span class="fc" id="L170">        i_pos = i_pos_original;</span>
+<span class="fc" id="L171">        j_pos = j_pos_original;</span>
+<span class="fc" id="L172">    }</span>
 }
 
-<span class="fc" id="L140">enum Direction {</span>
-<span class="fc" id="L141">	LEFT, RIGHT, UP, DOWN;</span>
+<span class="fc" id="L175">enum Direction {</span>
+<span class="fc" id="L176">	LEFT, RIGHT, UP, DOWN;</span>
     public static Direction getRandomDirection() {
-<span class="fc" id="L143">        return values()[(int)(Math.random()*4)];</span>
+<span class="fc" id="L178">        return values()[(int)(Math.random()*4)];</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

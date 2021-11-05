@@ -20,7 +20,7 @@ public class MapTest {
     private PImage[][] BombGuy_s = new PImage[4][4];
     private PImage[][] Red_s = new PImage[4][4];
     private PImage[][] Yellow_s = new PImage[4][4];
-    private JSONObject config = PApplet.loadJSONObject(new File("config.json"));
+    private JSONObject config = PApplet.loadJSONObject(new File("src/test/resources/config.json"));
     private JSONArray levels = config.getJSONArray("levels");
     private String path = levels.getJSONObject(0).getString("path");
     private int lives = 3;
@@ -131,7 +131,7 @@ public class MapTest {
 
     public static void createManualFile1() {
         try {
-            File file = new File("testcasemanuallvl101.txt");
+            File file = new File("src/test/resources/testcasemanuallvl101.txt");
             file.createNewFile();
             PrintWriter writeobj = new PrintWriter(file);
             writeobj.println("WWWWWWWWWWWWWWW");
@@ -145,7 +145,7 @@ public class MapTest {
             writeobj.println("WBW W W WBW W W");
             writeobj.println("W     BB   B BW");
             writeobj.println("W WBW W W W W W");
-            writeobj.println("W       B    GW");
+            writeobj.println("W            GW");
             writeobj.print("WWWWWWWWWWWWWWW");
             writeobj.close();
         }
@@ -157,7 +157,7 @@ public class MapTest {
 
     public static void createManualFile2() {
         try {
-            File file = new File("testcasemanuallvlBOMBTEST.txt");
+            File file = new File("src/test/resources/testcasemanuallvlBOMBTEST.txt");
             file.createNewFile();
             PrintWriter writeobj = new PrintWriter(file);
             writeobj.println("WWWWWWWWWWWWWWW");
@@ -183,7 +183,7 @@ public class MapTest {
 
     public static void createManualFile3() {
         try {
-            File file = new File("testcasemanuallvlBOMBALLGOALS.txt");
+            File file = new File("src/test/resources/testcasemanuallvlBOMBALLGOALS.txt");
             file.createNewFile();
             PrintWriter writeobj = new PrintWriter(file);
             writeobj.println("WWWWWWWWWWWWWWW");
@@ -191,7 +191,7 @@ public class MapTest {
             writeobj.println("WGGGGGGGGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");
-            writeobj.println("WGGGGGG GGGGGGW");
+            writeobj.println("WGGGGGGPGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");
             writeobj.println("WGGGGGGGGGGGGGW");
@@ -208,7 +208,7 @@ public class MapTest {
     }
     public static void createManualFile4() {
         try {
-            File file = new File("testcasemanuallvlENEMIES.txt");
+            File file = new File("src/test/resources/testcasemanuallvlENEMIES.txt");
             file.createNewFile();
             PrintWriter writeobj = new PrintWriter(file);
             writeobj.println("WWWWWWWWWWWWWWW");
